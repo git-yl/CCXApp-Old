@@ -70,7 +70,7 @@ public class AddUserMessageActivity extends AppCompatActivity {
     private EditText securityQ2;
     private EditText answerQ2;
 
-    private Calendar calendar;
+    private Calendar calendar; // 通过Calendar获取系统时间
     private int mYear;
     private int mMonth;
     private int mDay = -1;

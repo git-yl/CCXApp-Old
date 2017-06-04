@@ -15,7 +15,6 @@ import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -53,7 +52,6 @@ import com.example.jasper.ccxapp.service.factory.SendFactory;
 import com.example.jasper.ccxapp.util.GetCurrentTimeUtil;
 import com.example.jasper.ccxapp.util.SendMessageUtil;
 import com.example.jasper.ccxapp.util.UUIDKeyUtil;
-import com.example.jasper.ccxapp.util.showMessage;
 import com.example.jasper.ccxapp.widget.CustomVideoView;
 import com.example.jasper.ccxapp.widget.PinnedHeaderExpandableListView;
 import com.example.jasper.ccxapp.widget.RecordButton;
@@ -770,7 +768,8 @@ public class MainActivity extends AppCompatActivity implements
 
         switch (event.getType()) {
             case invite_received://收到好友邀请
-                showMessage.showNewFriend(MainActivity.this, fromUsername + "请求添加您为好友", "点击查看详细信息");
+                //showMessage.showNewFriend(MainActivity.this, fromUsername + "请求添加您为好友", "点击查看详细信息");
+                //需要修改
                 break;
             default:
                 break;
