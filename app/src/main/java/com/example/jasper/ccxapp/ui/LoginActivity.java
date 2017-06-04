@@ -26,6 +26,7 @@ import static com.example.jasper.ccxapp.util.ShowProcessUtil.showProgressDialog;
  */
 
 public class LoginActivity extends AppCompatActivity {
+
     private EditText usernameET;
     private EditText passwordET;
     private Button signInBtn;

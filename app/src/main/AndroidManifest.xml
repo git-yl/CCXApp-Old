@@ -65,29 +65,7 @@
             android:name=".ui.ShowMsgEditActivity"
             android:label="编辑消息"
             android:theme="@style/AppTheme1" />
-        <activity
-            android:name=".ui.ChatActivity"
-            android:label="我的群组"
-            android:theme="@style/AppTheme1" />
-        <activity
-            android:name=".ui.ChatDetailActivity"
-            android:label="群成员"
-            android:theme="@style/AppTheme1" />
-        <activity android:name=".ui.SendRequestActivity" />
-        <activity android:name=".ui.MakeChatroomActivity" />
         <activity android:name=".ui.AddUserMessageActivity" />
-        <activity
-            android:name=".ui.NewFriendActivity"
-            android:label="好友申请"
-            android:theme="@style/AppTheme1" />
-        <activity
-            android:name=".ui.SearchNewActivity"
-            android:label="搜索好友"
-            android:theme="@style/AppTheme1" />
-        <activity
-            android:name=".ui.FriendActivity"
-            android:label="我的好友"
-            android:theme="@style/AppTheme1" />
         <activity
             android:name=".ui.SignUpActivity"
             android:label="注册"
@@ -175,16 +153,10 @@
             android:name=".ui.UserMessageReviseActivity"
             android:label="用户信息"
             android:theme="@style/AppTheme1" />
-        <activity
-            android:name=".ui.ChatChangeMemberActivity"
-            android:label="群成员"
-            android:theme="@style/AppTheme1" />
-        <activity android:name=".ui.ShowFriendDetailMessageActivity" />
         <activity android:name=".ui.FlashlightActivity" />
         <activity android:name=".ui.FindPwd1Activity" />
         <activity android:name=".ui.FindPwd2Activity" />
         <activity android:name=".ui.FindPwd3Activity" />
-        <activity android:name=".ui.UserDetailActivity"></activity>
     </application>
 
 </manifest>
