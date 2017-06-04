@@ -1,6 +1,9 @@
 package com.example.jasper.ccxapp.db;
 
 
+import android.util.Log;
+
+import com.example.jasper.ccxapp.entitiy.NewFriend;
 import com.example.jasper.ccxapp.entitiy.SecurityData;
 import com.example.jasper.ccxapp.entitiy.User;
 import com.example.jasper.ccxapp.entitiy.UserInfo;
@@ -16,6 +19,7 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
+import cn.jpush.im.android.api.ContactManager;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.api.BasicCallback;
 
@@ -60,6 +64,43 @@ public class userDB {
                     ubl.showResult(true, "");
                 } else {
                     ubl.showResult(false, s);
+                }
+            }
+        });
+    }
+
+    //同意好友申请，删去申请表中的对应信息，在好友表中添加相应好友信息
+    public static void agreenewfriend(final String userName2) {
+        BmobQuery<NewFriend> query = new BmobQuery<NewFriend>();
+        query.addWhereEqualTo("requestFriend", userName2);
+        query.addWhereEqualTo("responseFriend", JMessageClient.getMyInfo().getUserName());
+        query.findObjects(new FindListener<NewFriend>() {
+            @Override
+            public void done(List<NewFriend> list, BmobException e) {
+                if(e==null){
+                    for(NewFriend friend : list){
+                        friend.delete(new UpdateListener() {
+                            @Override
+                            public void done(BmobException e) {
+                                if(e==null){
+                                    ContactManager.acceptInvitation(userName2, null, new BasicCallback() {
+                                        @Override
+                                        public void gotResult(int i, String s) {
+                                            if(0 == i){
+                                                Log.d("friend", "删除信息成功");
+                                            }else {
+                                                Log.e("friend", "删除信息失败");
+                                            }
+                                        }
+                                    });
+                                }else{
+                                    Log.e("friend", "删除信息失败"+e.getMessage());
+                                }
+                            }
+                        });
+                    }
+                }else{
+                    Log.e("friend", "删除信息失败"+e.getMessage());
                 }
             }
         });
