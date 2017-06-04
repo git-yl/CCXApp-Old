@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.hardware.Camera;
 import android.media.MediaPlayer;
 import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
@@ -105,7 +106,9 @@ public class MainActivity extends AppCompatActivity implements
     private TextView myName;
     private TextView userName;
     private TextView loginout;
-    private TextView openFlashlight;
+    private Button flashlight;
+    private Camera camera;
+    private boolean ifOpen;
     private CircleImageView leftUserAvatarCIV;
     private DrawerLayout drawerLayout;
     private ImageView myAvatarCIV;
@@ -155,6 +158,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void initView() {
+
         expandableListView = (PinnedHeaderExpandableListView) findViewById(R.id.expandablelist);
         stickyLayout = (StickyLayout) findViewById(R.id.sticky_layout);
         myAvatarCIV = (ImageView) findViewById(R.id.my_avatar_civ);
@@ -185,10 +189,9 @@ public class MainActivity extends AppCompatActivity implements
         drawerLayout.setScrimColor(Color.TRANSPARENT);
 
         View v1 = findViewById(R.id.left_drawer);
-        toFriend = (TextView) v1.findViewById(R.id.tvMyFriend);
         myName = (TextView) v1.findViewById(R.id.myName);
         loginout = (TextView) v1.findViewById(R.id.loginout);
-        openFlashlight = (TextView) v1.findViewById(R.id.flashlight);
+        flashlight= (Button) findViewById(R.id.flashlight);
         leftUserAvatarCIV = (CircleImageView) v1.findViewById(R.id.left_my_avatar_civ);
         try {
             myName.setText(JMessageClient.getMyInfo().getNickname());
@@ -199,18 +202,6 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent(MainActivity.this, UserMessageReviseActivity.class), 1);
-            }
-        });
-        toFriend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FriendActivity.class));
-            }
-        });
-        openFlashlight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FlashlightActivity.class));
             }
         });
         loginout.setOnClickListener(new View.OnClickListener() {
@@ -225,8 +216,34 @@ public class MainActivity extends AppCompatActivity implements
                         }).show();
             }
         });
+        ifOpen = false;
+        flashlight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ifOpen){
+                    closeFlashlight();
+                }else{
+                    openFlashlight();
+                }
+            }
+        });
+    }
+    private void closeFlashlight() {
+        camera.stopPreview();
+        camera.release();
+        ifOpen = false;
+        flashlight.setBackground(this.getResources().getDrawable(R.drawable.flashlight_off));
     }
 
+    private void openFlashlight() {
+        camera = Camera.open();
+        Camera.Parameters params = camera.getParameters();
+        params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        camera.setParameters(params);
+        camera.startPreview();
+        ifOpen = true;
+        flashlight.setBackground(this.getResources().getDrawable(R.drawable.flashlight_on));
+    }
     private void initMediaPlayer(String voicePath) {
         try {
             mediaPlayer.setDataSource(voicePath);

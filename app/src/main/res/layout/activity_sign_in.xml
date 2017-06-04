@@ -2,7 +2,6 @@
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/appback2"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -25,7 +24,7 @@
         <ImageView
             android:id="@+id/act"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:layout_marginTop="5dp"
             android:src="@drawable/logup_1"
             android:layout_weight="1" />
@@ -35,7 +34,7 @@
             android:digits="0123456789"
             android:hint="请输入手机号"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:layout_weight="5" />
 
     </LinearLayout>
@@ -50,7 +49,7 @@
         <ImageView
             android:id="@+id/psd"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:layout_marginTop="5dp"
             android:src="@drawable/logup_2"
             android:layout_weight="1" />
@@ -63,7 +62,7 @@
             android:inputType="textPassword"
             android:hint="请输入密码"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:layout_weight="5" />
 
     </LinearLayout>
@@ -71,6 +70,7 @@
     <Button
         android:id="@+id/btn_sign_in"
         android:text="登录"
+        android:textStyle="bold"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:background="@drawable/button_color"
@@ -100,7 +100,7 @@
         android:layout_alignParentStart="true">
 
         <TextView
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -111,20 +111,23 @@
         <TextView
             android:clickable="true"
             android:id="@+id/btn_sign_up"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:text="注册"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
-            android:textColor="#B452CD"
+            android:textColor="#680681"
             android:layout_marginStart="13dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
     <TextView
         android:id="@+id/findPassword"
+        android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="130dp"
         android:layout_marginTop="20dp"
-        android:textColor="#B452CD"
+        android:textColor="#680681"
+        android:textStyle="bold"
         android:layout_below="@id/lastLayout"
         android:text="找回密码"/>
 

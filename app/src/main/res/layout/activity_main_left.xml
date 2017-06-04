@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/leftground"
+    android:background="#dd5a5a"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -13,8 +13,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/left_my_avatar_civ"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/profile"
             app:civ_border_color="@color/white"
@@ -22,7 +22,7 @@
 
         <TextView
             android:id="@+id/myName"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="28.0dip"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/left_my_avatar_civ"
@@ -30,147 +30,71 @@
             android:paddingLeft="15.0dip"
             android:text="用户1"
             android:textColor="@color/white"
-            android:textSize="14.0sp" />
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true">
-
-        <ImageView
-            android:id="@+id/imageViewRing"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="5dp"
-            android:paddingLeft="5.0dip"
-            android:src="@drawable/ring" />
-
-        <TextView
-            android:id="@+id/tvMyFavorite"
-            android:layout_width="match_parent"
-            android:layout_height="50.0dip"
-            android:clickable="true"
-            android:drawablePadding="1.0dip"
-            android:gravity="center_vertical"
-            android:paddingLeft="5.0dip"
-            android:paddingRight="10.0dip"
-            android:text="设置提醒"
-            android:textColor="@color/white"
-            android:textSize="16.0sp" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2.0dip"
-        android:background="@drawable/biz_pc_account_line" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true">
-
-        <ImageView
-            android:id="@+id/imageViewFr"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="5dp"
-            android:paddingLeft="5.0dip"
-            android:src="@drawable/myfriend" />
-
-        <TextView
-            android:id="@+id/tvMyFriend"
-            android:layout_width="match_parent"
-            android:layout_height="50.0dip"
-            android:clickable="true"
-            android:drawablePadding="1.0dip"
-            android:gravity="center_vertical"
-            android:paddingLeft="5.0dip"
-            android:paddingRight="10.0dip"
-            android:text="我的好友"
-            android:textColor="@color/white"
-            android:textSize="16.0sp" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2.0dip"
-        android:background="@drawable/biz_pc_account_line" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true">
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="5dp"
-            android:paddingLeft="5.0dip"
-            android:src="@drawable/settings" />
-
-        <TextView
-            android:id="@+id/tvRing"
-            android:layout_width="match_parent"
-            android:layout_height="50.0dip"
-            android:drawablePadding="1.0dip"
-            android:gravity="center_vertical"
-            android:paddingLeft="5.0dip"
-            android:paddingRight="10.0dip"
-            android:text="设置"
-            android:textColor="@color/white"
-            android:textSize="16.0sp" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2.0dip"
-        android:background="@drawable/biz_pc_account_line" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true">
-
-        <TextView
-            android:id="@+id/flashlight"
-            android:layout_width="match_parent"
-            android:layout_height="50.0dip"
-            android:drawablePadding="1.0dip"
-            android:gravity="center_vertical"
-            android:paddingLeft="5.0dip"
-            android:paddingRight="10.0dip"
-            android:text="手电筒"
-            android:textColor="@color/white"
-            android:textSize="16.0sp" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2.0dip"
-        android:background="@drawable/biz_pc_account_line" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true">
-
+            android:textSize="18sp"
+            android:textStyle="bold"/>
         <TextView
             android:id="@+id/loginout"
-            android:layout_width="match_parent"
-            android:layout_height="50.0dip"
-            android:drawablePadding="1.0dip"
-            android:gravity="center_vertical"
-            android:paddingLeft="5.0dip"
-            android:paddingRight="10.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="退出登录"
             android:textColor="@color/white"
-            android:textSize="16.0sp" />
-    </LinearLayout>
-
+            android:textSize="16.0sp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            />
+    </RelativeLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="2.0dip"
         android:background="@drawable/biz_pc_account_line" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/flashlight"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/flashlight_off"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="手电筒"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2.0dip"
+        android:background="@drawable/biz_pc_account_line" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/imageView2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/weather" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="天气预报"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2.0dip"
+        android:background="@drawable/biz_pc_account_line" />
+
 </LinearLayout>

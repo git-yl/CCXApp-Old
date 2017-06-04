@@ -28,7 +28,7 @@
 
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- 状态栏和标题栏颜色,紫色,棕色-->
-        <item name="colorPrimary">#7da9b0</item>
+        <item name="colorPrimary">#f32b39</item>
         <item name="colorPrimaryDark">#461111</item>
         <!-- 标题颜色-->
         <item name="android:textColorPrimary">#461111</item>

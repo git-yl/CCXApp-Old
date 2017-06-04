@@ -26,7 +26,7 @@
         <ImageView
             android:id="@+id/act"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:layout_marginTop="5dp"
             android:src="@drawable/logup_1"
             android:layout_weight="1" />
@@ -37,7 +37,7 @@
             android:digits="0123456789"
             android:hint="请输入手机号码"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:layout_weight="5" />
 
     </LinearLayout>
@@ -52,7 +52,7 @@
         <ImageView
             android:id="@+id/psd"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:layout_marginTop="5dp"
             android:src="@drawable/logup_2"
             android:layout_weight="1" />
@@ -61,10 +61,10 @@
         <EditText
             android:id="@+id/sing_up_password"
             android:digits="0123456789abcdefghijklmnopqrstuvwxyz"
-            android:hint="请输入密码"
+            android:hint="请设置密码"
             android:inputType="textPassword"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:layout_weight="5" />
 
     </LinearLayout>
@@ -79,7 +79,7 @@
         <ImageView
             android:id="@+id/repsd"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:src="@drawable/logup_2"
             android:layout_marginTop="5dp"
             android:layout_weight="1" />
@@ -91,7 +91,7 @@
             android:hint="请确认密码"
             android:inputType="textPassword"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:layout_weight="5" />
 
     </LinearLayout>
@@ -101,6 +101,7 @@
         android:onClick="sign up"
         android:text="注册"
         android:textColor="@color/white"
+        android:textStyle="bold"
         android:textSize="18sp"
         android:background="@drawable/button_color"
         android:layout_width="330dp"
@@ -112,7 +113,7 @@
     <TextView
         android:id="@+id/below"
         android:text="                    已有账号？"
-        android:textSize="15sp"
+        android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sign_up"
@@ -123,10 +124,12 @@
         android:id="@+id/to_login"
         android:onClick="login in"
         android:text="登录"
+        android:textStyle="bold"
+        android:textColor="#680681"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:textColor="#B452CD"
+        android:textSize="18sp"
         android:layout_marginStart="13dp"
         android:layout_alignBottom="@+id/below"
         android:layout_toEndOf="@+id/below" />
