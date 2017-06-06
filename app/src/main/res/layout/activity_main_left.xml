@@ -71,27 +71,12 @@
         android:layout_width="match_parent"
         android:layout_height="2.0dip"
         android:background="@drawable/biz_pc_account_line" />
-    <LinearLayout
+    <fragment
+        android:id="@+id/get_weather"
+        android:name="com.example.jasper.ccxapp.fragment.WeatherFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/imageView2"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/weather" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="天气预报"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            android:layout_gravity="center_horizontal"/>
-    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="2.0dip"
