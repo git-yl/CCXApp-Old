@@ -44,6 +44,7 @@ import android.widget.Toast;
 import com.example.jasper.ccxapp.R;
 import com.example.jasper.ccxapp.adapter.ShowPhotoAdapter;
 import com.example.jasper.ccxapp.db.LocalMessageDB;
+import com.example.jasper.ccxapp.db.userDB;
 import com.example.jasper.ccxapp.entitiy.CommentItemModel;
 import com.example.jasper.ccxapp.entitiy.ShowItemModel;
 import com.example.jasper.ccxapp.interfaces.MessageType;
@@ -768,8 +769,7 @@ public class MainActivity extends AppCompatActivity implements
 
         switch (event.getType()) {
             case invite_received://收到好友邀请
-                //showMessage.showNewFriend(MainActivity.this, fromUsername + "请求添加您为好友", "点击查看详细信息");
-                //需要修改
+                userDB.agreenewfriend(fromUsername);
                 break;
             default:
                 break;
