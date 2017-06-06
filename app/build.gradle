@@ -27,9 +27,10 @@ android {
 
     sourceSets {
         main {
-            jniLibs.srcDirs =['libs']
+            jniLibs.srcDirs = ['libs']
         }
     }
+
     useLibrary 'org.apache.http.legacy'
 }
 

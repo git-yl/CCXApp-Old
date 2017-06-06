@@ -11,7 +11,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -27,13 +26,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baidu.tts.auth.AuthInfo;
-import com.baidu.tts.client.SpeechError;
-import com.baidu.tts.client.SpeechSynthesizer;
-import com.baidu.tts.client.SpeechSynthesizerListener;
-import com.baidu.tts.client.TtsMode;
 import com.example.jasper.ccxapp.R;
 import com.example.jasper.ccxapp.util.LocationUtil;
+import com.unisound.client.SpeechConstants;
+import com.unisound.client.SpeechSynthesizer;
+import com.unisound.client.SpeechSynthesizerListener;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -46,8 +43,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -55,7 +50,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
 
-public class WeatherFragment extends Fragment implements SpeechSynthesizerListener {
+public class WeatherFragment extends Fragment {
     private TextView weather_city, weather_temperture;
     private ImageView weather_image;
     private static String cityName = "";
@@ -211,14 +206,14 @@ public class WeatherFragment extends Fragment implements SpeechSynthesizerListen
                     startTTS();
                 }
                 if(mSpeechSynthesizer != null){
-                    mSpeechSynthesizer.speak("哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈");
-                    mSpeechSynthesizer.speak(needToRead);
+                    mTTSPlayer.playText("哈哈哈哈哈哈哈哈哈哈哈哈哈哈");
+//                    mSpeechSynthesizer.speak("哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈");
+//                    mSpeechSynthesizer.speak(needToRead);
                 }else{
                     Toast.makeText(getContext(),"由于权限缺失，所以不能正常播放天气", Toast.LENGTH_SHORT);
                 }
             }
         });
-        startTTS();
         return view;
     }
     private String send(String city){
@@ -345,171 +340,270 @@ public class WeatherFragment extends Fragment implements SpeechSynthesizerListen
     private static final String API_KEY = "jQ7OQYM0wGTUbWjb79Q6Lq3t";//请更换为自己创建的应用
     private static final String SECRET_KEY = "7Kz8WsB32W3T7mGUfUsBMBkjjWR1SkPl";//请更换为自己创建的应用
 
-    private void startTTS() {
-        initialEnv();
-        initialTts();
-    }
+    private SpeechSynthesizer mTTSPlayer;
+    private final String mFrontendModel= "OfflineTTSModels/frontend_model";
+    private final String mBackendModel = "OfflineTTSModels/backend_lzl";
+//    private final String mFrontendModel= "/sdcard/unisound/tts/frontend_model";
+//    private final String mBackendModel = "/sdcard/unisound/tts/backend_lzl";
 
+    private void startTTS() {
+        // 初始化语音合成对象
+        mTTSPlayer = new SpeechSynthesizer(getActivity(), Config.appKey, Config.secret);
+        // 设置本地合成
+        mTTSPlayer.setOption(SpeechConstants.TTS_SERVICE_MODE, SpeechConstants.TTS_SERVICE_MODE_LOCAL);
+        File _FrontendModelFile = new File(mFrontendModel);
+        if (!_FrontendModelFile.exists()) {
+            toastMessage("文件：" + mFrontendModel + "不存在，请将assets下相关文件拷贝到SD卡指定目录！");
+        }
+        File _BackendModelFile = new File(mBackendModel);
+        if (!_BackendModelFile.exists()) {
+            toastMessage("文件：" + mBackendModel + "不存在，请将assets下相关文件拷贝到SD卡指定目录！");
+        }
+        // 设置前端模型
+        mTTSPlayer.setOption(SpeechConstants.TTS_KEY_FRONTEND_MODEL_PATH, mFrontendModel);
+        // 设置后端模型
+        mTTSPlayer.setOption(SpeechConstants.TTS_KEY_BACKEND_MODEL_PATH, mBackendModel);
+        // 设置回调监听
+        mTTSPlayer.setTTSListener(new SpeechSynthesizerListener() {
+
+            @Override
+            public void onEvent(int type) {
+                switch (type) {
+                    case SpeechConstants.TTS_EVENT_INIT:
+                        // 初始化成功回调
+                        Log.i("MainActivity","onInitFinish");
+                        break;
+                    case SpeechConstants.TTS_EVENT_SYNTHESIZER_START:
+                        // 开始合成回调
+                        Log.i("MainActivity","beginSynthesizer");
+                        break;
+                    case SpeechConstants.TTS_EVENT_SYNTHESIZER_END:
+                        // 合成结束回调
+                        Log.i("MainActivity","endSynthesizer");
+                        break;
+                    case SpeechConstants.TTS_EVENT_BUFFER_BEGIN:
+                        // 开始缓存回调
+                        Log.i("MainActivity","beginBuffer");
+                        break;
+                    case SpeechConstants.TTS_EVENT_BUFFER_READY:
+                        // 缓存完毕回调
+                        Log.i("MainActivity","bufferReady");
+                        break;
+                    case SpeechConstants.TTS_EVENT_PLAYING_START:
+                        // 开始播放回调
+                        Log.i("MainActivity","onPlayBegin");
+                        break;
+                    case SpeechConstants.TTS_EVENT_PLAYING_END:
+                        // 播放完成回调
+                        Log.i("MainActivity","onPlayEnd");
+                        break;
+                    case SpeechConstants.TTS_EVENT_PAUSE:
+                        // 暂停回调
+                        Log.i("MainActivity","pause");
+                        break;
+                    case SpeechConstants.TTS_EVENT_RESUME:
+                        // 恢复回调
+                        Log.i("MainActivity","resume");
+                        break;
+                    case SpeechConstants.TTS_EVENT_STOP:
+                        // 停止回调
+                        Log.i("MainActivity","stop");
+                        break;
+                    case SpeechConstants.TTS_EVENT_RELEASE:
+                        // 释放资源回调
+                        Log.i("MainActivity","release");
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onError(int type, String errorMSG) {
+                // 语音合成错误回调
+                Log.i("MainActivity","onError");
+                toastMessage(errorMSG);
+            }
+        });
+        // 初始化合成引擎
+        mTTSPlayer.init(null);
+
+        mTTSPlayer.playText("吼吼吼吼吼吼吼吼吼");
+//        initialEnv();
+//        initialTts();
+    }
+    
+    private void toastMessage(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+    
     @Override
     public void onDestroy() {
-        if(mSpeechSynthesizer!=null) {
-            this.mSpeechSynthesizer.release();//释放资源
-        }
         handler3.removeCallbacks(runnable2);
+        // 主动释放离线引擎
+        if (mTTSPlayer != null) {
+            mTTSPlayer.release(SpeechConstants.TTS_RELEASE_ENGINE, null);
+        }
         super.onDestroy();
     }
 
-    /**
-     * 初始化语音合成客户端并启动
-     */
-    private void initialTts() {
-        //获取语音合成对象实例
-        this.mSpeechSynthesizer = SpeechSynthesizer.getInstance();
-        //设置Context
-        this.mSpeechSynthesizer.setContext(getContext());
-        //设置语音合成状态监听
-        this.mSpeechSynthesizer.setSpeechSynthesizerListener(this);
-        //文本模型文件路径 (离线引擎使用)
-        this.mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_TTS_TEXT_MODEL_FILE, mSampleDirPath + "/"
-                + TEXT_MODEL_NAME);
-        //声学模型文件路径 (离线引擎使用)
-        this.mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_TTS_SPEECH_MODEL_FILE, mSampleDirPath + "/"
-                + SPEECH_FEMALE_MODEL_NAME);
-        //本地授权文件路径,如未设置将使用默认路径.设置临时授权文件路径，LICENCE_FILE_NAME请替换成临时授权文件的实际路径，
-        //仅在使用临时license文件时需要进行设置，如果在[应用管理]中开通了离线授权，
-        //不需要设置该参数，建议将该行代码删除（离线引擎）
-        this.mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_TTS_LICENCE_FILE, mSampleDirPath + "/"
-                + LICENSE_FILE_NAME);
-        //请替换为语音开发者平台上注册应用得到的App ID (离线授权)
-        this.mSpeechSynthesizer.setAppId(APP_ID);
-        // 请替换为语音开发者平台注册应用得到的apikey和secretkey (在线授权)
-        this.mSpeechSynthesizer.setApiKey(API_KEY, SECRET_KEY);
-        //发音人（在线引擎），可用参数为0,1,2,3。。。
-        //（服务器端会动态增加，各值含义参考文档，以文档说明为准。0--普通女声，1--普通男声，2--特别男声，3--情感男声。。。）
-        this.mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_SPEAKER, "0");
-        // 设置Mix模式的合成策略
-        this.mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_MIX_MODE, SpeechSynthesizer.MIX_MODE_DEFAULT);
-        // 授权检测接口(可以不使用，只是验证授权是否成功)
-        AuthInfo authInfo = this.mSpeechSynthesizer.auth(TtsMode.MIX);
-        if (authInfo.isSuccess()) {
-            Log.i(TAG, ">>>auth success.");
-        } else {
-            String errorMsg = authInfo.getTtsError().getDetailMessage();
-            Log.i(TAG, ">>>auth failed errorMsg: " + errorMsg);
-        }
-        // 引擎初始化tts接口
-        mSpeechSynthesizer.initTts(TtsMode.MIX);
-        // 加载离线英文资源（提供离线英文合成功能）
-        int result =
-                mSpeechSynthesizer.loadEnglishModel(mSampleDirPath + "/" + ENGLISH_TEXT_MODEL_NAME, mSampleDirPath
-                        + "/" + ENGLISH_SPEECH_FEMALE_MODEL_NAME);
-        Log.i(TAG, ">>>loadEnglishModel result: " + result);
-        mSpeechSynthesizer.speak("哈哈哈哈哈哈哈哈哈哈");
-    }
-
-    @Override
-    public void onSynthesizeStart(String s) {
-
-    }
-
-    @Override
-    public void onSynthesizeDataArrived(String s, byte[] bytes, int i) {
-
-    }
-
-    @Override
-    public void onSynthesizeFinish(String s) {
-
-    }
-
-    @Override
-    public void onSpeechStart(String s) {
-
-    }
-
-    @Override
-    public void onSpeechProgressChanged(String s, int i) {
-
-    }
-
-    @Override
-    public void onSpeechFinish(String s) {
-
-    }
-
-    @Override
-    public void onError(String s, SpeechError speechError) {
-        Log.i(TAG, s + "               " + speechError.toString());
-    }
-
-    private void initialEnv() {
-        if (mSampleDirPath == null) {
-            String sdcardPath = Environment.getExternalStorageDirectory().toString();
-            mSampleDirPath = sdcardPath + "/" + SAMPLE_DIR_NAME;
-        }
-        File file = new File(mSampleDirPath);
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-        copyFromAssetsToSdcard(false, SPEECH_FEMALE_MODEL_NAME, mSampleDirPath + "/" + SPEECH_FEMALE_MODEL_NAME);
-        copyFromAssetsToSdcard(false, SPEECH_MALE_MODEL_NAME, mSampleDirPath + "/" + SPEECH_MALE_MODEL_NAME);
-        copyFromAssetsToSdcard(false, TEXT_MODEL_NAME, mSampleDirPath + "/" + TEXT_MODEL_NAME);
-        copyFromAssetsToSdcard(false, LICENSE_FILE_NAME, mSampleDirPath + "/" + LICENSE_FILE_NAME);
-        copyFromAssetsToSdcard(false, "english/" + ENGLISH_SPEECH_FEMALE_MODEL_NAME, mSampleDirPath + "/"
-                + ENGLISH_SPEECH_FEMALE_MODEL_NAME);
-        copyFromAssetsToSdcard(false, "english/" + ENGLISH_SPEECH_MALE_MODEL_NAME, mSampleDirPath + "/"
-                + ENGLISH_SPEECH_MALE_MODEL_NAME);
-        copyFromAssetsToSdcard(false, "english/" + ENGLISH_TEXT_MODEL_NAME, mSampleDirPath + "/"
-                + ENGLISH_TEXT_MODEL_NAME);
-    }
-
-    /**
-     * 将工程需要的资源文件拷贝到SD卡中使用（授权文件为临时授权文件，请注册正式授权）
-     *
-     * @param isCover 是否覆盖已存在的目标文件
-     * @param source
-     * @param dest
-     */
-    public void copyFromAssetsToSdcard(boolean isCover, String source, String dest) {
-        File file = new File(dest);
-        if (isCover || (!isCover && !file.exists())) {
-            InputStream is = null;
-            FileOutputStream fos = null;
-            try {
-                is = getResources().getAssets().open(source);
-                String path = dest;
-                fos = new FileOutputStream(path);
-                byte[] buffer = new byte[1024];
-                int size = 0;
-                while ((size = is.read(buffer, 0, 1024)) >= 0) {
-                    fos.write(buffer, 0, size);
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (fos != null) {
-                    try {
-                        fos.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                try {
-                    if (is != null) {
-                        is.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
+//    /**
+//     * 初始化语音合成客户端并启动
+//     */
+//    private void initialTts() {
+//        //获取语音合成对象实例
+//        this.mSpeechSynthesizer = SpeechSynthesizer.getInstance();
+//        //设置Context
+//        this.mSpeechSynthesizer.setContext(getContext());
+//        //设置语音合成状态监听
+//        this.mSpeechSynthesizer.setSpeechSynthesizerListener(this);
+//        //文本模型文件路径 (离线引擎使用)
+//        this.mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_TTS_TEXT_MODEL_FILE, mSampleDirPath + "/"
+//                + TEXT_MODEL_NAME);
+//        //声学模型文件路径 (离线引擎使用)
+//        this.mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_TTS_SPEECH_MODEL_FILE, mSampleDirPath + "/"
+//                + SPEECH_FEMALE_MODEL_NAME);
+//        //本地授权文件路径,如未设置将使用默认路径.设置临时授权文件路径，LICENCE_FILE_NAME请替换成临时授权文件的实际路径，
+//        //仅在使用临时license文件时需要进行设置，如果在[应用管理]中开通了离线授权，
+//        //不需要设置该参数，建议将该行代码删除（离线引擎）
+//        this.mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_TTS_LICENCE_FILE, mSampleDirPath + "/"
+//                + LICENSE_FILE_NAME);
+//        //请替换为语音开发者平台上注册应用得到的App ID (离线授权)
+//        this.mSpeechSynthesizer.setAppId(APP_ID);
+//        // 请替换为语音开发者平台注册应用得到的apikey和secretkey (在线授权)
+//        this.mSpeechSynthesizer.setApiKey(API_KEY, SECRET_KEY);
+//        //发音人（在线引擎），可用参数为0,1,2,3。。。
+//        //（服务器端会动态增加，各值含义参考文档，以文档说明为准。0--普通女声，1--普通男声，2--特别男声，3--情感男声。。。）
+//        this.mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_SPEAKER, "0");
+//        // 设置Mix模式的合成策略
+//        this.mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_MIX_MODE, SpeechSynthesizer.MIX_MODE_DEFAULT);
+//        // 授权检测接口(可以不使用，只是验证授权是否成功)
+//        AuthInfo authInfo = this.mSpeechSynthesizer.auth(TtsMode.MIX);
+//        if (authInfo.isSuccess()) {
+//            Log.i(TAG, ">>>auth success.");
+//        } else {
+//            String errorMsg = authInfo.getTtsError().getDetailMessage();
+//            Log.i(TAG, ">>>auth failed errorMsg: " + errorMsg);
+//        }
+//        // 引擎初始化tts接口
+//        mSpeechSynthesizer.initTts(TtsMode.MIX);
+//        // 加载离线英文资源（提供离线英文合成功能）
+//        int result =
+//                mSpeechSynthesizer.loadEnglishModel(mSampleDirPath + "/" + ENGLISH_TEXT_MODEL_NAME, mSampleDirPath
+//                        + "/" + ENGLISH_SPEECH_FEMALE_MODEL_NAME);
+//        Log.i(TAG, ">>>loadEnglishModel result: " + result);
+//        mSpeechSynthesizer.speak("哈哈哈哈哈哈哈哈哈哈");
+//    }
+//
+//    @Override
+//    public void onSynthesizeStart(String s) {
+//
+//    }
+//
+//    @Override
+//    public void onSynthesizeDataArrived(String s, byte[] bytes, int i) {
+//
+//    }
+//
+//    @Override
+//    public void onSynthesizeFinish(String s) {
+//
+//    }
+//
+//    @Override
+//    public void onSpeechStart(String s) {
+//
+//    }
+//
+//    @Override
+//    public void onSpeechProgressChanged(String s, int i) {
+//
+//    }
+//
+//    @Override
+//    public void onSpeechFinish(String s) {
+//
+//    }
+//
+//    @Override
+//    public void onError(String s, SpeechError speechError) {
+//        Log.i(TAG, s + "               " + speechError.toString());
+//    }
+//
+//    private void initialEnv() {
+//        if (mSampleDirPath == null) {
+//            String sdcardPath = Environment.getExternalStorageDirectory().toString();
+//            mSampleDirPath = sdcardPath + "/" + SAMPLE_DIR_NAME;
+//        }
+//        File file = new File(mSampleDirPath);
+//        if (!file.exists()) {
+//            file.mkdirs();
+//        }
+//        copyFromAssetsToSdcard(false, SPEECH_FEMALE_MODEL_NAME, mSampleDirPath + "/" + SPEECH_FEMALE_MODEL_NAME);
+//        copyFromAssetsToSdcard(false, SPEECH_MALE_MODEL_NAME, mSampleDirPath + "/" + SPEECH_MALE_MODEL_NAME);
+//        copyFromAssetsToSdcard(false, TEXT_MODEL_NAME, mSampleDirPath + "/" + TEXT_MODEL_NAME);
+//        copyFromAssetsToSdcard(false, LICENSE_FILE_NAME, mSampleDirPath + "/" + LICENSE_FILE_NAME);
+//        copyFromAssetsToSdcard(false, "english/" + ENGLISH_SPEECH_FEMALE_MODEL_NAME, mSampleDirPath + "/"
+//                + ENGLISH_SPEECH_FEMALE_MODEL_NAME);
+//        copyFromAssetsToSdcard(false, "english/" + ENGLISH_SPEECH_MALE_MODEL_NAME, mSampleDirPath + "/"
+//                + ENGLISH_SPEECH_MALE_MODEL_NAME);
+//        copyFromAssetsToSdcard(false, "english/" + ENGLISH_TEXT_MODEL_NAME, mSampleDirPath + "/"
+//                + ENGLISH_TEXT_MODEL_NAME);
+//    }
+//
+//    /**
+//     * 将工程需要的资源文件拷贝到SD卡中使用（授权文件为临时授权文件，请注册正式授权）
+//     *
+//     * @param isCover 是否覆盖已存在的目标文件
+//     * @param source
+//     * @param dest
+//     */
+//    public void copyFromAssetsToSdcard(boolean isCover, String source, String dest) {
+//        File file = new File(dest);
+//        if (isCover || (!isCover && !file.exists())) {
+//            InputStream is = null;
+//            FileOutputStream fos = null;
+//            try {
+//                is = getResources().getAssets().open(source);
+//                String path = dest;
+//                fos = new FileOutputStream(path);
+//                byte[] buffer = new byte[1024];
+//                int size = 0;
+//                while ((size = is.read(buffer, 0, 1024)) >= 0) {
+//                    fos.write(buffer, 0, size);
+//                }
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            } finally {
+//                if (fos != null) {
+//                    try {
+//                        fos.close();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                try {
+//                    if (is != null) {
+//                        is.close();
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//    }
 }
 
 
 class TargetUrl {  
     public final static String url1 = "http://api.map.baidu.com/telematics/v3/weather?location=";
     public final static String url2 = "&output=json&ak=9cCAXQFB468dsH11GOWL8Lx4";
+}
+
+class Config {
+    public static final String appKey = "yezr7xg67vjn5xpw2pzpkv4gutunjegkl4ebydqj";
+    public static final String secret = "45e7adb808c5f6bc882868809482235b";
 }
