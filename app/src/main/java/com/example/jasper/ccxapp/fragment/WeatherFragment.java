@@ -191,7 +191,8 @@ public class WeatherFragment extends Fragment implements SpeechSynthesizerListen
                 Manifest.permission.INTERNET,
                 Manifest.permission.READ_PHONE_STATE,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.ACCESS_WIFI_STATE})){
+                Manifest.permission.ACCESS_WIFI_STATE,
+                Manifest.permission.RECORD_AUDIO})){
             LocationUtil.getCNBylocation(getActivity());
             cityName = LocationUtil.cityName;
             //启动计时器

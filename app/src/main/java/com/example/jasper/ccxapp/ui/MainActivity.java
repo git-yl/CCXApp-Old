@@ -740,22 +740,26 @@ public class MainActivity extends AppCompatActivity implements
         return super.onKeyDown(keyCode, event);
     }
 
-    public boolean checkPermision(String[] permissions) {
+    public boolean checkPermision(String[] permissions2) {
         boolean flag = false;
-        for (String permission : permissions) {
-            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+        List<String> permissions3 = new ArrayList<String>();
+        for(String permission : permissions2){
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED){
                 flag = true;
-                break;
+                permissions3.add(permission);
             }
         }
-        if (flag) {
+        String[] permissions = new String[permissions3.size()];
+        for(int i = 0; i < permissions3.size(); i++){
+            permissions[i] = permissions3.get(i);
+        }
+        if(flag){
             ActivityCompat.requestPermissions(this, permissions, 1);
-        } else {
+        }else{
             return true;
         }
         return false;
     }
-
 
     class RecieveTextTask extends AsyncTask<Message, Integer, Boolean> {
 

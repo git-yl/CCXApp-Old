@@ -38,6 +38,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.model.UserInfo;
@@ -158,13 +159,18 @@ public class AddUserMessageActivity extends AppCompatActivity {
         addOriMessage();
     }
 
-    public boolean checkPermision(String[] permissions) {
+    public boolean checkPermision(String[] permissions2) {
         boolean flag = false;
-        for(String permission : permissions){
+        List<String> permissions3 = new ArrayList<String>();
+        for(String permission : permissions2){
             if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED){
                 flag = true;
-                break;
+                permissions3.add(permission);
             }
+        }
+        String[] permissions = new String[permissions3.size()];
+        for(int i = 0; i < permissions3.size(); i++){
+            permissions[i] = permissions3.get(i);
         }
         if(flag){
             ActivityCompat.requestPermissions(this, permissions, 1);
