@@ -1,17 +1,12 @@
 package com.example.jasper.ccxapp.ui;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-import com.example.jasper.ccxapp.R;
-import com.example.jasper.ccxapp.util.AppConstants;
-import com.example.jasper.ccxapp.util.SpUtils;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.example.jasper.ccxapp.R;
+import com.example.jasper.ccxapp.util.SpUtil;
 
 
 /**
@@ -23,7 +18,7 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // 判断是否是第一次开启应用
-        boolean isFirstOpen = SpUtils.getBoolean(this, AppConstants.FIRST_OPEN);
+        boolean isFirstOpen = SpUtil.getBoolean(this, SpUtil.FIRST_OPEN);
         // 如果是第一次启动
         //则先进入功能引导页
         if (!isFirstOpen) {

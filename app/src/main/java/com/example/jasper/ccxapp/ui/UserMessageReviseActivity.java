@@ -27,7 +27,7 @@ import android.widget.Toast;
 
 import com.example.jasper.ccxapp.R;
 import com.example.jasper.ccxapp.db.userDB;
-import com.example.jasper.ccxapp.interfaces.userBackListener;
+import com.example.jasper.ccxapp.interfaces.UserBackListener;
 import com.example.jasper.ccxapp.util.ImageUtil;
 
 import java.io.File;
@@ -317,7 +317,7 @@ public class UserMessageReviseActivity extends AppCompatActivity {
         String nickname = nickName.getText().toString().trim();
         int sexid = message_sex.getCheckedRadioButtonId();
         UserInfo.Gender sex;
-        if(sexid == R.id.female){
+        if(sexid == R.id.female_rb){
             sex = UserInfo.Gender.female;
         }else{
             sex = UserInfo.Gender.male;
@@ -363,7 +363,7 @@ public class UserMessageReviseActivity extends AppCompatActivity {
         }
         if(flag) {
             showProgressDialog(this, "系统提示", "信息加载中，请稍后");
-            userDB.addUserMessage(imagePath, nickname, sex, birthday, address, explain, new userBackListener() {
+            userDB.addUserMessage(imagePath, nickname, sex, birthday, address, explain, new UserBackListener() {
                 @Override
                 public void showResult(boolean result, String message) {
                     hideProgressDialog();

@@ -2,9 +2,8 @@ package com.example.jasper.ccxapp.ui;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -13,8 +12,7 @@ import android.widget.LinearLayout;
 
 import com.example.jasper.ccxapp.R;
 import com.example.jasper.ccxapp.adapter.GuideViewPagerAdapter;
-import com.example.jasper.ccxapp.util.AppConstants;
-import com.example.jasper.ccxapp.util.SpUtils;
+import com.example.jasper.ccxapp.util.SpUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +74,7 @@ public class GuideActivity extends Activity implements View.OnClickListener {
     protected void onPause() {
         super.onPause();
         // 如果切换到后台，就设置下次不进入功能引导页
-        SpUtils.putBoolean(GuideActivity.this, AppConstants.FIRST_OPEN, true);
+        SpUtil.putBoolean(GuideActivity.this, SpUtil.FIRST_OPEN, true);
         finish();
     }
 
@@ -151,7 +149,7 @@ public class GuideActivity extends Activity implements View.OnClickListener {
         Intent intent = new Intent(GuideActivity.this,
                 SplashActivity.class);
         startActivity(intent);
-        SpUtils.putBoolean(GuideActivity.this, AppConstants.FIRST_OPEN, true);
+        SpUtil.putBoolean(GuideActivity.this, SpUtil.FIRST_OPEN, true);
         finish();
     }
 

@@ -2,7 +2,6 @@ package com.example.jasper.ccxapp.ui;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -17,7 +16,6 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.OrientationHelper;
@@ -102,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements
     private String checkCommKey = "";
     private TextView myName;
     private TextView userName;
-    private TextView loginout;
     private CircleImageView leftUserAvatarCIV;
     private DrawerLayout drawerLayout;
     private ImageView myAvatarCIV;
@@ -184,7 +181,6 @@ public class MainActivity extends AppCompatActivity implements
 
         View v1 = findViewById(R.id.left_drawer);
         myName = (TextView) v1.findViewById(R.id.myName_tv);
-        loginout = (TextView) v1.findViewById(R.id.loginout_tv);
         leftUserAvatarCIV = (CircleImageView) v1.findViewById(R.id.left_my_avatar_civ);
         try {
             myName.setText(JMessageClient.getMyInfo().getNickname());
@@ -195,18 +191,6 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent(MainActivity.this, UserMessageReviseActivity.class), 1);
-            }
-        });
-        loginout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new AlertDialog.Builder(MainActivity.this).setTitle("系统提示").setMessage("是否确认退出登录？")
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                loginOut();
-                            }
-                        }).show();
             }
         });
     }
@@ -379,7 +363,7 @@ public class MainActivity extends AppCompatActivity implements
                 showHolder.showUserAvatarCIv = (CircleImageView) convertView.findViewById(R.id.show_user_avatar_civ);
                 showHolder.showTextTv = (TextView) convertView.findViewById(R.id.show_text_content_tv);
                 showHolder.showTimeTv = (TextView) convertView.findViewById(R.id.show_time_tv);
-                showHolder.expandedIv = (ImageView) convertView.findViewById(R.id.expanded_img);
+                showHolder.expandedIv = (ImageView) convertView.findViewById(R.id.expanded_iv);
                 showHolder.showImageRv = (RecyclerView) convertView.findViewById(R.id.show_recycler_view);
                 convertView.setTag(showHolder);
             } else {
@@ -387,7 +371,7 @@ public class MainActivity extends AppCompatActivity implements
             }
 
             showVideoView = (CustomVideoView) convertView.findViewById(R.id.show_video_view);
-            showVideoPlayBtn = (ImageView) convertView.findViewById(R.id.show_video_play_video_btn);
+            showVideoPlayBtn = (ImageView) convertView.findViewById(R.id.show_video_play_video_iv);
 
             final ShowItemModel showItem = (ShowItemModel) getGroup(groupPosition);
             showHolder.showUsernameTv.setText(showItem.getShowUsername());
@@ -477,7 +461,7 @@ public class MainActivity extends AppCompatActivity implements
                 convertView = inflater.inflate(R.layout.comment_item, null);
                 commentHolder.commentUsernameTv = (TextView) convertView.findViewById(R.id.comment_username_tv);
                 commentHolder.playVoiceCommentBtn = (Button) convertView.findViewById(R.id.play_comment_audio_btn);
-                commentHolder.timeofvoice = (TextView) convertView.findViewById(R.id.time_of_voice);
+                commentHolder.timeofvoice = (TextView) convertView.findViewById(R.id.time_of_voice_tv);
                 commentHolder.sendVoiceCommentBtn = (RecordButton) convertView.findViewById(R.id.send_comment_audio_btn);
                 commentHolder.commentTimeTv = (TextView) convertView.findViewById(R.id.comment_time_tv);
                 convertView.setTag(commentHolder);

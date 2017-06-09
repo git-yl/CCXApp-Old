@@ -7,9 +7,9 @@ import android.content.SharedPreferences;
  * SharedPreference操作类
  * Created by devilwwj on 16/1/23.
  */
-public class SpUtils {
+public class SpUtil {
     private static final String spFileName = "app";
-
+    public static final String FIRST_OPEN = "first_open";
 
     public static String getString(Context context, String strKey) {
         SharedPreferences setPreferences = context.getSharedPreferences(
