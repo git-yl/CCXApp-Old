@@ -51,11 +51,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme1">
         <activity android:name=".ui.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.MainActivity"
@@ -157,6 +153,15 @@
         <activity android:name=".ui.FindPwd1Activity" />
         <activity android:name=".ui.FindPwd2Activity" />
         <activity android:name=".ui.FindPwd3Activity" />
+        <activity android:name=".ui.application.WelcomeActivity" />
+        <activity android:name=".ui.GuideActivity" />
+        <activity android:name=".ui.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

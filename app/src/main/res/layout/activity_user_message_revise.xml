@@ -210,5 +210,16 @@
         android:text="提交信息"
         android:textColor="@color/white"
         android:textStyle="bold" />
+    <Button
+        android:id="@+id/loginout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_color"
+        android:text="退出登录"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
 </LinearLayout>

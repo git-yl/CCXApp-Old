@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements
     private TextView toFriend;
     private TextView myName;
     private TextView userName;
-    private TextView loginout;
+
     private Button flashlight;
     private Camera camera;
     private boolean ifOpen;
@@ -189,7 +189,6 @@ public class MainActivity extends AppCompatActivity implements
 
         View v1 = findViewById(R.id.left_drawer);
         myName = (TextView) v1.findViewById(R.id.myName);
-        loginout = (TextView) v1.findViewById(R.id.loginout);
         flashlight= (Button) findViewById(R.id.flashlight);
         leftUserAvatarCIV = (CircleImageView) v1.findViewById(R.id.left_my_avatar_civ);
         try {
@@ -203,18 +202,7 @@ public class MainActivity extends AppCompatActivity implements
                 startActivityForResult(new Intent(MainActivity.this, UserMessageReviseActivity.class), 1);
             }
         });
-        loginout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new AlertDialog.Builder(MainActivity.this).setTitle("系统提示").setMessage("是否确认退出登录？")
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                loginOut();
-                            }
-                        }).show();
-            }
-        });
+
         ifOpen = false;
         flashlight.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -252,11 +240,7 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    private void loginOut() {
-        JMessageClient.logout();
-        startActivity(new Intent(MainActivity.this, LoginActivity.class));
-        this.finish();
-    }
+
 
     /***
      * InitData

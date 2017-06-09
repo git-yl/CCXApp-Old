@@ -49,6 +49,7 @@ public class UserMessageReviseActivity extends AppCompatActivity {
 
     private ImageView message_image;
     private TextView btn_image;
+    private Button loginout;
     private TextView userName;
     private EditText nickName;
     private RadioGroup message_sex;
@@ -74,7 +75,7 @@ public class UserMessageReviseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_message_revise);
-
+        loginout=(Button)findViewById(R.id.loginout);
         message_image = (ImageView)findViewById(R.id.add_message_image);
         btn_image = (TextView) findViewById(R.id.add_message_image_btn);
         userName = (TextView) findViewById(R.id.message_userName);
@@ -89,7 +90,17 @@ public class UserMessageReviseActivity extends AppCompatActivity {
         imageUtils = new ImageUtil(UserMessageReviseActivity.this);
 
         initVariable();
-
+        message_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String[] permissions = {Manifest.permission.CAMERA,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                if(checkPermision(permissions)){
+                    chooseDialog();
+                }
+            }
+        });
         btn_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +112,18 @@ public class UserMessageReviseActivity extends AppCompatActivity {
                 }
             }
         });
-
+        loginout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(UserMessageReviseActivity.this).setTitle("系统提示").setMessage("是否确认退出登录？")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                loginOut();
+                            }
+                        }).show();
+            }
+        });
         add_message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,7 +185,11 @@ public class UserMessageReviseActivity extends AppCompatActivity {
         }
         message_explain.setText(oriExplain);
     }
-
+    private void loginOut() {
+        JMessageClient.logout();
+        startActivity(new Intent(UserMessageReviseActivity.this, LoginActivity.class));
+        this.finish();
+    }
     public boolean checkPermision(String[] permissions) {
         boolean flag = false;
         for(String permission : permissions){
