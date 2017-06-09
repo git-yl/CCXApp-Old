@@ -67,6 +67,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void forRegister() {
+        //获得输入信息
         final String username = userName.getText().toString().trim();
         final String pwd = password1.getText().toString().trim();
         String pwd2 = password2.getText().toString().trim();
@@ -82,6 +83,7 @@ public class SignUpActivity extends AppCompatActivity {
         if(!showProgressDialog(this, "系统提示", "信息加载中，请稍后")){
             return;
         }
+        //添加新用户
         userDB.addNewUser(username, pwd, new UserBackListener(){
                     @Override
                     public void showResult(boolean result, String message) {
