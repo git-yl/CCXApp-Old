@@ -27,7 +27,7 @@ import android.widget.Toast;
 
 import com.example.jasper.ccxapp.R;
 import com.example.jasper.ccxapp.db.userDB;
-import com.example.jasper.ccxapp.interfaces.UserBackListener;
+import com.example.jasper.ccxapp.interfaces.userBackListener;
 import com.example.jasper.ccxapp.util.ImageUtil;
 
 import java.io.File;
@@ -49,6 +49,7 @@ public class UserMessageReviseActivity extends AppCompatActivity {
 
     private ImageView message_image;
     private TextView btn_image;
+    private Button loginout;
     private TextView userName;
     private EditText nickName;
     private RadioGroup message_sex;
@@ -75,6 +76,7 @@ public class UserMessageReviseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_message_revise);
 
+        loginout=(Button)findViewById(R.id.loginout_btn);
         message_image = (ImageView)findViewById(R.id.add_message_image_civ);
         btn_image = (TextView) findViewById(R.id.add_message_image_tv);
         userName = (TextView) findViewById(R.id.message_userName_tv);
@@ -89,7 +91,17 @@ public class UserMessageReviseActivity extends AppCompatActivity {
         imageUtils = new ImageUtil(UserMessageReviseActivity.this);
 
         initVariable();
-
+        message_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String[] permissions = {Manifest.permission.CAMERA,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                if(checkPermision(permissions)){
+                    chooseDialog();
+                }
+            }
+        });
         btn_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +113,18 @@ public class UserMessageReviseActivity extends AppCompatActivity {
                 }
             }
         });
-
+        loginout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(UserMessageReviseActivity.this).setTitle("系统提示").setMessage("是否确认退出登录？")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                loginOut();
+                            }
+                        }).show();
+            }
+        });
         add_message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,6 +185,11 @@ public class UserMessageReviseActivity extends AppCompatActivity {
             female.setChecked(true);
         }
         message_explain.setText(oriExplain);
+    }
+    private void loginOut() {
+        JMessageClient.logout();
+        startActivity(new Intent(UserMessageReviseActivity.this, LoginActivity.class));
+        this.finish();
     }
 
     private boolean checkPermision(String[] permissions) {
@@ -289,7 +317,7 @@ public class UserMessageReviseActivity extends AppCompatActivity {
         String nickname = nickName.getText().toString().trim();
         int sexid = message_sex.getCheckedRadioButtonId();
         UserInfo.Gender sex;
-        if(sexid == R.id.female_rb){
+        if(sexid == R.id.female){
             sex = UserInfo.Gender.female;
         }else{
             sex = UserInfo.Gender.male;
@@ -333,25 +361,23 @@ public class UserMessageReviseActivity extends AppCompatActivity {
         if(imagePath != null && imagePath.exists()){
             flag = true;
         }
-
         if(flag) {
-            if(showProgressDialog(this, "系统提示", "信息加载中，请稍后")) {
-                userDB.addUserMessage(imagePath, nickname, sex, birthday, address, explain, new UserBackListener() {
-                    @Override
-                    public void showResult(boolean result, String message) {
-                        hideProgressDialog();
-                        if (result) {
-                            if (imageUtils.picFile != null || !oriNickName.equals(JMessageClient.getMyInfo().getNickname())) {
-                                setResult(666, getIntent());
-                            }
-                            Toast.makeText(UserMessageReviseActivity.this, "修改信息成功", Toast.LENGTH_SHORT).show();
-                            finish();
-                        } else {
-                            Toast.makeText(UserMessageReviseActivity.this, "修改信息失败", Toast.LENGTH_SHORT).show();
+            showProgressDialog(this, "系统提示", "信息加载中，请稍后");
+            userDB.addUserMessage(imagePath, nickname, sex, birthday, address, explain, new userBackListener() {
+                @Override
+                public void showResult(boolean result, String message) {
+                    hideProgressDialog();
+                    if (result) {
+                        if (imageUtils.picFile != null || !oriNickName.equals(JMessageClient.getMyInfo().getNickname())) {
+                            setResult(666, getIntent());
                         }
+                        Toast.makeText(UserMessageReviseActivity.this, "修改信息成功", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        Toast.makeText(UserMessageReviseActivity.this, "修改信息失败", Toast.LENGTH_SHORT).show();
                     }
-                });
-            }
+                }
+            });
         }
     }
 

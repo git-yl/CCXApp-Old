@@ -220,11 +220,6 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    private void loginOut() {
-        JMessageClient.logout();
-        startActivity(new Intent(MainActivity.this, LoginActivity.class));
-        this.finish();
-    }
 
     /***
      * InitData
@@ -384,7 +379,7 @@ public class MainActivity extends AppCompatActivity implements
                 showHolder.showUserAvatarCIv = (CircleImageView) convertView.findViewById(R.id.show_user_avatar_civ);
                 showHolder.showTextTv = (TextView) convertView.findViewById(R.id.show_text_content_tv);
                 showHolder.showTimeTv = (TextView) convertView.findViewById(R.id.show_time_tv);
-                showHolder.expandedIv = (ImageView) convertView.findViewById(R.id.expanded_iv);
+                showHolder.expandedIv = (ImageView) convertView.findViewById(R.id.expanded_img);
                 showHolder.showImageRv = (RecyclerView) convertView.findViewById(R.id.show_recycler_view);
                 convertView.setTag(showHolder);
             } else {
@@ -392,7 +387,7 @@ public class MainActivity extends AppCompatActivity implements
             }
 
             showVideoView = (CustomVideoView) convertView.findViewById(R.id.show_video_view);
-            showVideoPlayBtn = (ImageView) convertView.findViewById(R.id.show_video_play_video_iv);
+            showVideoPlayBtn = (ImageView) convertView.findViewById(R.id.show_video_play_video_btn);
 
             final ShowItemModel showItem = (ShowItemModel) getGroup(groupPosition);
             showHolder.showUsernameTv.setText(showItem.getShowUsername());
@@ -482,7 +477,7 @@ public class MainActivity extends AppCompatActivity implements
                 convertView = inflater.inflate(R.layout.comment_item, null);
                 commentHolder.commentUsernameTv = (TextView) convertView.findViewById(R.id.comment_username_tv);
                 commentHolder.playVoiceCommentBtn = (Button) convertView.findViewById(R.id.play_comment_audio_btn);
-                commentHolder.timeofvoice = (TextView) convertView.findViewById(R.id.time_of_voice_tv);
+                commentHolder.timeofvoice = (TextView) convertView.findViewById(R.id.time_of_voice);
                 commentHolder.sendVoiceCommentBtn = (RecordButton) convertView.findViewById(R.id.send_comment_audio_btn);
                 commentHolder.commentTimeTv = (TextView) convertView.findViewById(R.id.comment_time_tv);
                 convertView.setTag(commentHolder);
