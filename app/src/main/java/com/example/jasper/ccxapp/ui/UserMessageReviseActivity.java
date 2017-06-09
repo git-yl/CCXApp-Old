@@ -27,7 +27,7 @@ import android.widget.Toast;
 
 import com.example.jasper.ccxapp.R;
 import com.example.jasper.ccxapp.db.userDB;
-import com.example.jasper.ccxapp.interfaces.userBackListener;
+import com.example.jasper.ccxapp.interfaces.UserBackListener;
 import com.example.jasper.ccxapp.util.ImageUtil;
 
 import java.io.File;
@@ -75,17 +75,17 @@ public class UserMessageReviseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_message_revise);
 
-        message_image = (ImageView)findViewById(R.id.add_message_image);
-        btn_image = (TextView) findViewById(R.id.add_message_image_btn);
-        userName = (TextView) findViewById(R.id.message_userName);
-        nickName = (EditText)findViewById(R.id.message_nickname);
-        message_sex = (RadioGroup)findViewById(R.id.message_sex);
-        message_birthday = (EditText)findViewById(R.id.showBirthday);
-        message_address = (EditText)findViewById(R.id.message_address);
-        message_explain = (EditText)findViewById(R.id.message_explain);
+        message_image = (ImageView)findViewById(R.id.add_message_image_civ);
+        btn_image = (TextView) findViewById(R.id.add_message_image_tv);
+        userName = (TextView) findViewById(R.id.message_userName_tv);
+        nickName = (EditText)findViewById(R.id.message_nickname_tv);
+        message_sex = (RadioGroup)findViewById(R.id.message_sex_rg);
+        message_birthday = (EditText)findViewById(R.id.showBirthday_et);
+        message_address = (EditText)findViewById(R.id.message_address_et);
+        message_explain = (EditText)findViewById(R.id.message_explain_et);
         add_message = (Button)findViewById(R.id.add_message_btn);
-        male = (RadioButton)findViewById(R.id.male);
-        female = (RadioButton)findViewById(R.id.female);
+        male = (RadioButton)findViewById(R.id.male_rb);
+        female = (RadioButton)findViewById(R.id.female_rb);
         imageUtils = new ImageUtil(UserMessageReviseActivity.this);
 
         initVariable();
@@ -164,7 +164,7 @@ public class UserMessageReviseActivity extends AppCompatActivity {
         message_explain.setText(oriExplain);
     }
 
-    public boolean checkPermision(String[] permissions) {
+    private boolean checkPermision(String[] permissions) {
         boolean flag = false;
         for(String permission : permissions){
             if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED){
@@ -289,7 +289,7 @@ public class UserMessageReviseActivity extends AppCompatActivity {
         String nickname = nickName.getText().toString().trim();
         int sexid = message_sex.getCheckedRadioButtonId();
         UserInfo.Gender sex;
-        if(sexid == R.id.female){
+        if(sexid == R.id.female_rb){
             sex = UserInfo.Gender.female;
         }else{
             sex = UserInfo.Gender.male;
@@ -333,23 +333,25 @@ public class UserMessageReviseActivity extends AppCompatActivity {
         if(imagePath != null && imagePath.exists()){
             flag = true;
         }
+
         if(flag) {
-            showProgressDialog(this, "系统提示", "信息加载中，请稍后");
-            userDB.addUserMessage(imagePath, nickname, sex, birthday, address, explain, new userBackListener() {
-                @Override
-                public void showResult(boolean result, String message) {
-                    hideProgressDialog();
-                    if (result) {
-                        if (imageUtils.picFile != null || !oriNickName.equals(JMessageClient.getMyInfo().getNickname())) {
-                            setResult(666, getIntent());
+            if(showProgressDialog(this, "系统提示", "信息加载中，请稍后")) {
+                userDB.addUserMessage(imagePath, nickname, sex, birthday, address, explain, new UserBackListener() {
+                    @Override
+                    public void showResult(boolean result, String message) {
+                        hideProgressDialog();
+                        if (result) {
+                            if (imageUtils.picFile != null || !oriNickName.equals(JMessageClient.getMyInfo().getNickname())) {
+                                setResult(666, getIntent());
+                            }
+                            Toast.makeText(UserMessageReviseActivity.this, "修改信息成功", Toast.LENGTH_SHORT).show();
+                            finish();
+                        } else {
+                            Toast.makeText(UserMessageReviseActivity.this, "修改信息失败", Toast.LENGTH_SHORT).show();
                         }
-                        Toast.makeText(UserMessageReviseActivity.this, "修改信息成功", Toast.LENGTH_SHORT).show();
-                        finish();
-                    } else {
-                        Toast.makeText(UserMessageReviseActivity.this, "修改信息失败", Toast.LENGTH_SHORT).show();
                     }
-                }
-            });
+                });
+            }
         }
     }
 

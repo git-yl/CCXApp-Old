@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/weather_image"
+        android:id="@+id/weather_image_iv"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
@@ -14,7 +14,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/weather_city"
+        android:id="@+id/weather_city_tv"
         android:text="天气预报"
         android:textStyle="bold"
         android:textSize="16sp"
@@ -24,7 +24,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/weather_temperture"
+        android:id="@+id/weather_temperture_tv"
         android:textStyle="bold"
         android:textSize="16sp"
         android:textColor="@color/white"

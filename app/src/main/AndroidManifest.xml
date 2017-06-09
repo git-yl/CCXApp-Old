@@ -165,7 +165,7 @@
             android:name=".ui.UserMessageReviseActivity"
             android:label="用户信息"
             android:theme="@style/AppTheme1" />
-        <activity android:name=".ui.FlashlightActivity" />
+        <activity android:name=".fragment.FlashlightFragment" />
         <activity android:name=".ui.FindPwd1Activity" />
         <activity android:name=".ui.FindPwd2Activity" />
         <activity android:name=".ui.FindPwd3Activity" />

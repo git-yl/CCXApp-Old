@@ -9,7 +9,7 @@
     tools:context="com.example.jasper.ccxapp.ui.FindPwd3Activity">
 
     <EditText
-        android:id="@+id/pwd1"
+        android:id="@+id/pwd1_et"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_width="match_parent"
@@ -19,17 +19,17 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="59dp" />
     <EditText
-        android:id="@+id/pwd2"
+        android:id="@+id/pwd2_et"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:inputType="textPassword"
         android:hint="请再次输入新的密码"
-        android:layout_below="@+id/pwd1"
+        android:layout_below="@+id/pwd1_et"
         android:layout_marginTop="30dp" />
     <Button
-        android:id="@+id/find_pwd_phone_OK"
+        android:id="@+id/find_pwd_phone_OK_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/button_color"
@@ -37,10 +37,10 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:text="确定"
-        android:layout_above="@+id/find_pwd_phone_cancel"
+        android:layout_above="@+id/find_pwd_phone_cancel_btn"
         android:layout_marginBottom="14dp" />
     <Button
-        android:id="@+id/find_pwd_phone_cancel"
+        android:id="@+id/find_pwd_phone_cancel_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/button_color"

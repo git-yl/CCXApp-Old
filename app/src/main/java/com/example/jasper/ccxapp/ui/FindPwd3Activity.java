@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.jasper.ccxapp.R;
 import com.example.jasper.ccxapp.db.userDB;
-import com.example.jasper.ccxapp.interfaces.userBackListener;
+import com.example.jasper.ccxapp.interfaces.UserBackListener;
 
 import static com.example.jasper.ccxapp.util.ShowProcessUtil.hideProgressDialog;
 import static com.example.jasper.ccxapp.util.ShowProcessUtil.showProgressDialog;
@@ -29,10 +29,10 @@ public class FindPwd3Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_pwd3);
 
-        findPwdOK = (Button)findViewById(R.id.find_pwd_phone_OK);
-        findPwdCancel = (Button)findViewById(R.id.find_pwd_phone_cancel);
-        pwd1 = (EditText) findViewById(R.id.pwd1);
-        pwd2 = (EditText) findViewById(R.id.pwd2);
+        findPwdOK = (Button)findViewById(R.id.find_pwd_phone_OK_btn);
+        findPwdCancel = (Button)findViewById(R.id.find_pwd_phone_cancel_btn);
+        pwd1 = (EditText) findViewById(R.id.pwd1_et);
+        pwd2 = (EditText) findViewById(R.id.pwd2_et);
 
         findPwdOK.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,8 +64,10 @@ public class FindPwd3Activity extends AppCompatActivity {
             showDialog("请输入相同的密码！");
             return;
         }
-        showProgressDialog(this, "系统提示", "信息加载中，请稍后");
-        userDB.changeUserPwd(getIntent().getStringExtra("phone"), pwd11, new userBackListener() {
+        if(!showProgressDialog(this, "系统提示", "信息加载中，请稍后")){
+            return;
+        }
+        userDB.changeUserPwd(getIntent().getStringExtra("phone"), pwd11, new UserBackListener() {
             @Override
             public void showResult(boolean result, String message) {
                 hideProgressDialog();

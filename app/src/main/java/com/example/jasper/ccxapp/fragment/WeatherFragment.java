@@ -15,7 +15,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -53,9 +52,23 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class WeatherFragment extends Fragment implements SpeechSynthesizerListener {
+
+    private static final String SAMPLE_DIR_NAME = "baiduTTS";
+    private static final String SPEECH_FEMALE_MODEL_NAME = "bd_etts_speech_female.dat";
+    private static final String SPEECH_MALE_MODEL_NAME = "bd_etts_speech_male.dat";
+    private static final String TEXT_MODEL_NAME = "bd_etts_text.dat";
+    private static final String ENGLISH_SPEECH_FEMALE_MODEL_NAME = "bd_etts_speech_female_en.dat";
+    private static final String ENGLISH_SPEECH_MALE_MODEL_NAME = "bd_etts_speech_male_en.dat";
+    private static final String ENGLISH_TEXT_MODEL_NAME = "bd_etts_text_en.dat";
+    private static final String APP_ID = "9735452";
+    private static final String API_KEY = "nh5Cc5tgDPaGDDGkHE8GbQ7y";
+    private static final String SECRET_KEY = "51c0c5c57f36e7363b6779a9046ab003";
+
     private TextView weather_city, weather_temperture;
     private ImageView weather_image;
     private static String cityName = "";
@@ -67,6 +80,9 @@ public class WeatherFragment extends Fragment implements SpeechSynthesizerListen
     private static Handler handler3 = new Handler();
 
     private String needToRead = "";
+
+    private SpeechSynthesizer mSpeechSynthesizer;//百度语音合成客户端
+    private String mSampleDirPath;
 
     @SuppressWarnings("deprecation")
     private static Runnable runnable = new Runnable() {
@@ -167,10 +183,15 @@ public class WeatherFragment extends Fragment implements SpeechSynthesizerListen
     };
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        if(checkPermision(new String[]{Manifest.permission.ACCESS_NETWORK_STATE,
+        if(checkPermision(new String[]{
+                Manifest.permission.ACCESS_NETWORK_STATE,
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.MODIFY_AUDIO_SETTINGS}, 1)){
+                Manifest.permission.MODIFY_AUDIO_SETTINGS,
+                Manifest.permission.INTERNET,
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.ACCESS_WIFI_STATE})){
             LocationUtil.getCNBylocation(getActivity());
             cityName = LocationUtil.cityName;
             //启动计时器
@@ -184,23 +205,15 @@ public class WeatherFragment extends Fragment implements SpeechSynthesizerListen
                     handler.sendMessage(m);
                 }
             }).start();
-        }
-        if(checkPermision(new String[]{
-                Manifest.permission.INTERNET,
-                Manifest.permission.WRITE_SETTINGS,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_PHONE_STATE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.ACCESS_WIFI_STATE}, 2)){
             startTTS();
         }
         context = getActivity();
         weather = this;
 
         View view = inflater.inflate(R.layout.fragment_weather, container,false);
-        weather_city = (TextView)view.findViewById(R.id.weather_city);
-        weather_image = (ImageView) view.findViewById(R.id.weather_image);
-        weather_temperture = (TextView) view.findViewById(R.id.weather_temperture);
+        weather_city = (TextView)view.findViewById(R.id.weather_city_tv);
+        weather_image = (ImageView) view.findViewById(R.id.weather_image_iv);
+        weather_temperture = (TextView) view.findViewById(R.id.weather_temperture_tv);
 
         weather_city.setText(cityName);
 
@@ -211,14 +224,12 @@ public class WeatherFragment extends Fragment implements SpeechSynthesizerListen
                     startTTS();
                 }
                 if(mSpeechSynthesizer != null){
-                    mSpeechSynthesizer.speak("哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈");
                     mSpeechSynthesizer.speak(needToRead);
                 }else{
                     Toast.makeText(getContext(),"由于权限缺失，所以不能正常播放天气", Toast.LENGTH_SHORT);
                 }
             }
         });
-        startTTS();
         return view;
     }
     private String send(String city){
@@ -262,16 +273,21 @@ public class WeatherFragment extends Fragment implements SpeechSynthesizerListen
         return bitmap;
     }
 
-    public boolean checkPermision(String[] permissions, int code) {
+    public boolean checkPermision(String[] permissions2) {
         boolean flag = false;
-        for(String permission : permissions){
+        List<String> permissions3 = new ArrayList<String>();
+        for(String permission : permissions2){
             if (ContextCompat.checkSelfPermission(getActivity(), permission) != PackageManager.PERMISSION_GRANTED){
                 flag = true;
-                break;
+                permissions3.add(permission);
             }
         }
+        String[] permissions = new String[permissions3.size()];
+        for(int i = 0; i < permissions3.size(); i++){
+            permissions[i] = permissions3.get(i);
+        }
         if(flag){
-            ActivityCompat.requestPermissions(getActivity(), permissions, code);
+            WeatherFragment.this.requestPermissions(permissions, 1);
         }else{
             return true;
         }
@@ -283,15 +299,26 @@ public class WeatherFragment extends Fragment implements SpeechSynthesizerListen
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == 1) {
-            boolean isAllGranted = true;
-            // 判断是否所有的权限都已经授予了
-            for (int grant : grantResults) {
-                if (grant != PackageManager.PERMISSION_GRANTED) {
-                    isAllGranted = false;
-                    break;
+            Log.i("MainActivity", "permission");
+            boolean isAllGranted = false;
+            String[] permissions2 = new String[]{
+                    Manifest.permission.ACCESS_NETWORK_STATE,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.MODIFY_AUDIO_SETTINGS};
+            String[] permissions3 = new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.INTERNET,
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.ACCESS_WIFI_STATE};
+            for(String permission : permissions2){
+                if (ContextCompat.checkSelfPermission(getActivity(), permission) != PackageManager.PERMISSION_GRANTED){
+                    isAllGranted = true;
                 }
             }
-            if (isAllGranted) {
+            if (!isAllGranted) {
+                Log.i("MainActivity", "permission1");
                 //申请权限成功后需要调用的函数
                 LocationUtil.getCNBylocation(getActivity());
                 cityName = LocationUtil.cityName;
@@ -310,40 +337,21 @@ public class WeatherFragment extends Fragment implements SpeechSynthesizerListen
                 new AlertDialog.Builder(getActivity()).setTitle("系统提示").setMessage("由于未赋予相应的权限，无法正常使用查看天气功能！")
                         .setPositiveButton("确定", null).show();
             }
-        }else if (requestCode == 2){
-            boolean isAllGranted = true;
-            // 判断是否所有的权限都已经授予了
-            for (int grant : grantResults) {
-                if (grant != PackageManager.PERMISSION_GRANTED) {
-                    isAllGranted = false;
-                    break;
+            isAllGranted = false;
+            for(String permission : permissions3){
+                if (ContextCompat.checkSelfPermission(getActivity(), permission) != PackageManager.PERMISSION_GRANTED){
+                    isAllGranted = true;
                 }
             }
-            if (isAllGranted) {
-                //申请权限成功后需要调用的函数
+            if(!isAllGranted){
+                Log.i("MainActivity", "permission2");
                 startTTS();
-            } else {
-                new AlertDialog.Builder(getActivity()).setTitle("系统提示").setMessage("由于未赋予相应的权限，无法正常使用读取天气功能！")
+            }else {
+                new AlertDialog.Builder(getActivity()).setTitle("系统提示").setMessage("由于未赋予相应的权限，无法正常使用播放天气功能！")
                         .setPositiveButton("确定", null).show();
             }
         }
     }
-
-    private static final String TAG = "MainActivity";
-
-    private SpeechSynthesizer mSpeechSynthesizer;//百度语音合成客户端
-    private String mSampleDirPath;
-    private static final String SAMPLE_DIR_NAME = "baiduTTS";
-    private static final String SPEECH_FEMALE_MODEL_NAME = "bd_etts_speech_female.dat";
-    private static final String SPEECH_MALE_MODEL_NAME = "bd_etts_speech_male.dat";
-    private static final String TEXT_MODEL_NAME = "bd_etts_text.dat";
-    private static final String LICENSE_FILE_NAME = "temp_license_2017-06-06";
-    private static final String ENGLISH_SPEECH_FEMALE_MODEL_NAME = "bd_etts_speech_female_en.dat";
-    private static final String ENGLISH_SPEECH_MALE_MODEL_NAME = "bd_etts_speech_male_en.dat";
-    private static final String ENGLISH_TEXT_MODEL_NAME = "bd_etts_text_en.dat";
-    private static final String APP_ID = "9734313";//请更换为自己创建的应用
-    private static final String API_KEY = "jQ7OQYM0wGTUbWjb79Q6Lq3t";//请更换为自己创建的应用
-    private static final String SECRET_KEY = "7Kz8WsB32W3T7mGUfUsBMBkjjWR1SkPl";//请更换为自己创建的应用
 
     private void startTTS() {
         initialEnv();
@@ -375,11 +383,6 @@ public class WeatherFragment extends Fragment implements SpeechSynthesizerListen
         //声学模型文件路径 (离线引擎使用)
         this.mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_TTS_SPEECH_MODEL_FILE, mSampleDirPath + "/"
                 + SPEECH_FEMALE_MODEL_NAME);
-        //本地授权文件路径,如未设置将使用默认路径.设置临时授权文件路径，LICENCE_FILE_NAME请替换成临时授权文件的实际路径，
-        //仅在使用临时license文件时需要进行设置，如果在[应用管理]中开通了离线授权，
-        //不需要设置该参数，建议将该行代码删除（离线引擎）
-        this.mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_TTS_LICENCE_FILE, mSampleDirPath + "/"
-                + LICENSE_FILE_NAME);
         //请替换为语音开发者平台上注册应用得到的App ID (离线授权)
         this.mSpeechSynthesizer.setAppId(APP_ID);
         // 请替换为语音开发者平台注册应用得到的apikey和secretkey (在线授权)
@@ -392,10 +395,8 @@ public class WeatherFragment extends Fragment implements SpeechSynthesizerListen
         // 授权检测接口(可以不使用，只是验证授权是否成功)
         AuthInfo authInfo = this.mSpeechSynthesizer.auth(TtsMode.MIX);
         if (authInfo.isSuccess()) {
-            Log.i(TAG, ">>>auth success.");
         } else {
             String errorMsg = authInfo.getTtsError().getDetailMessage();
-            Log.i(TAG, ">>>auth failed errorMsg: " + errorMsg);
         }
         // 引擎初始化tts接口
         mSpeechSynthesizer.initTts(TtsMode.MIX);
@@ -403,8 +404,6 @@ public class WeatherFragment extends Fragment implements SpeechSynthesizerListen
         int result =
                 mSpeechSynthesizer.loadEnglishModel(mSampleDirPath + "/" + ENGLISH_TEXT_MODEL_NAME, mSampleDirPath
                         + "/" + ENGLISH_SPEECH_FEMALE_MODEL_NAME);
-        Log.i(TAG, ">>>loadEnglishModel result: " + result);
-        mSpeechSynthesizer.speak("哈哈哈哈哈哈哈哈哈哈");
     }
 
     @Override
@@ -439,7 +438,7 @@ public class WeatherFragment extends Fragment implements SpeechSynthesizerListen
 
     @Override
     public void onError(String s, SpeechError speechError) {
-        Log.i(TAG, s + "               " + speechError.toString());
+
     }
 
     private void initialEnv() {
@@ -454,7 +453,6 @@ public class WeatherFragment extends Fragment implements SpeechSynthesizerListen
         copyFromAssetsToSdcard(false, SPEECH_FEMALE_MODEL_NAME, mSampleDirPath + "/" + SPEECH_FEMALE_MODEL_NAME);
         copyFromAssetsToSdcard(false, SPEECH_MALE_MODEL_NAME, mSampleDirPath + "/" + SPEECH_MALE_MODEL_NAME);
         copyFromAssetsToSdcard(false, TEXT_MODEL_NAME, mSampleDirPath + "/" + TEXT_MODEL_NAME);
-        copyFromAssetsToSdcard(false, LICENSE_FILE_NAME, mSampleDirPath + "/" + LICENSE_FILE_NAME);
         copyFromAssetsToSdcard(false, "english/" + ENGLISH_SPEECH_FEMALE_MODEL_NAME, mSampleDirPath + "/"
                 + ENGLISH_SPEECH_FEMALE_MODEL_NAME);
         copyFromAssetsToSdcard(false, "english/" + ENGLISH_SPEECH_MALE_MODEL_NAME, mSampleDirPath + "/"
@@ -506,10 +504,9 @@ public class WeatherFragment extends Fragment implements SpeechSynthesizerListen
             }
         }
     }
-}
 
-
-class TargetUrl {  
-    public final static String url1 = "http://api.map.baidu.com/telematics/v3/weather?location=";
-    public final static String url2 = "&output=json&ak=9cCAXQFB468dsH11GOWL8Lx4";
+    class TargetUrl {
+        public final static String url1 = "http://api.map.baidu.com/telematics/v3/weather?location=";
+        public final static String url2 = "&output=json&ak=9cCAXQFB468dsH11GOWL8Lx4";
+    }
 }
