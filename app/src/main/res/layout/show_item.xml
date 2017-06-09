@@ -88,7 +88,7 @@
                     android:visibility="gone" />
 
                 <ImageView
-                    android:id="@+id/show_video_play_video_btn"
+                    android:id="@+id/show_video_play_video_iv"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_centerInParent="true"
@@ -108,7 +108,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/expanded_img"
+                android:id="@+id/expanded_iv"
                 android:layout_width="20dp"
                 android:layout_height="84dp"
                 android:layout_gravity="start"

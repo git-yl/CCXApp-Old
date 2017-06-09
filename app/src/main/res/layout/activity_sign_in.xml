@@ -7,7 +7,7 @@
 
 
     <ImageView
-        android:id="@+id/logo"
+        android:id="@+id/logo_iv"
         android:layout_width="fill_parent"
         android:layout_height="150dp"
         android:layout_weight="1"
@@ -18,11 +18,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/accountLayout"
-        android:layout_below="@+id/logo">
+        android:id="@+id/accountLayout_lt"
+        android:layout_below="@+id/logo_iv">
 
         <ImageView
-            android:id="@+id/act"
+            android:id="@+id/act_iv"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginTop="5dp"
@@ -30,7 +30,7 @@
             android:layout_weight="1" />
 
         <EditText
-            android:id="@+id/login_username"
+            android:id="@+id/login_username_et"
             android:digits="0123456789"
             android:hint="请输入手机号"
             android:layout_width="0dp"
@@ -44,20 +44,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/psdLayout"
-        android:layout_below="@+id/accountLayout">
+        android:layout_below="@+id/accountLayout_lt">
 
         <ImageView
-            android:id="@+id/psd"
+            android:id="@+id/psd_iv"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginTop="5dp"
             android:src="@drawable/logup_2"
             android:layout_weight="1" />
 
-
-
         <EditText
-            android:id="@+id/login_password"
+            android:id="@+id/login_password_et"
             android:digits="0123456789abcdefghijklmnopqrstuvwxyz"
             android:inputType="textPassword"
             android:hint="请输入密码"
@@ -68,7 +66,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_sign_in"
+        android:id="@+id/sign_in_btn"
         android:text="登录"
         android:textStyle="bold"
         android:textColor="@color/white"
@@ -85,7 +83,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/tagLayout"
-        android:layout_below="@+id/btn_sign_in">
+        android:layout_below="@+id/sign_in_btn">
 
 
     </LinearLayout>
@@ -106,11 +104,11 @@
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="130dp"
             android:text="还没有账号？"
-            android:id="@+id/text" />
+            android:id="@+id/text_tv" />
 
         <TextView
             android:clickable="true"
-            android:id="@+id/btn_sign_up"
+            android:id="@+id/sign_up_tv"
             android:textSize="18sp"
             android:text="注册"
             android:textStyle="bold"
@@ -120,7 +118,7 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
     <TextView
-        android:id="@+id/findPassword"
+        android:id="@+id/findPassword_tv"
         android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

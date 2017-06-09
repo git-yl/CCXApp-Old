@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.example.jasper.ccxapp.R;
 import com.example.jasper.ccxapp.db.userDB;
-import com.example.jasper.ccxapp.interfaces.userBackListener;
+import com.example.jasper.ccxapp.interfaces.UserBackListener;
 
 import java.util.regex.Pattern;
 
@@ -37,11 +37,11 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        userName = (EditText) findViewById(R.id.sing_up_userName);
-        password1 = (EditText) findViewById(R.id.sing_up_password);
-        password2 = (EditText) findViewById(R.id.sing_up_password2);
-        forRegister = (Button) findViewById(R.id.sign_up);
-        toLogin = (TextView) findViewById(R.id.to_login);
+        userName = (EditText) findViewById(R.id.sing_up_userName_et);
+        password1 = (EditText) findViewById(R.id.sing_up_password_et);
+        password2 = (EditText) findViewById(R.id.sing_up_password2_et);
+        forRegister = (Button) findViewById(R.id.sign_up_btn);
+        toLogin = (TextView) findViewById(R.id.to_login_tv);
 
 
         forRegister.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +67,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void forRegister() {
+        //获得输入信息
         final String username = userName.getText().toString().trim();
         final String pwd = password1.getText().toString().trim();
         String pwd2 = password2.getText().toString().trim();
@@ -79,8 +80,11 @@ public class SignUpActivity extends AppCompatActivity {
             showDialog("请输入相同的密码");
             return;
         }
-        showProgressDialog(this, "系统提示", "信息加载中，请稍后");
-        userDB.addNewUser(username, pwd, new userBackListener(){
+        if(!showProgressDialog(this, "系统提示", "信息加载中，请稍后")){
+            return;
+        }
+        //添加新用户
+        userDB.addNewUser(username, pwd, new UserBackListener(){
                     @Override
                     public void showResult(boolean result, String message) {
                         hideProgressDialog();

@@ -7,8 +7,8 @@ import com.example.jasper.ccxapp.entitiy.NewFriend;
 import com.example.jasper.ccxapp.entitiy.SecurityData;
 import com.example.jasper.ccxapp.entitiy.User;
 import com.example.jasper.ccxapp.entitiy.UserInfo;
-import com.example.jasper.ccxapp.interfaces.userBackListListener;
-import com.example.jasper.ccxapp.interfaces.userBackListener;
+import com.example.jasper.ccxapp.interfaces.UserBackListListener;
+import com.example.jasper.ccxapp.interfaces.UserBackListener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ import cn.jpush.im.api.BasicCallback;
 public class userDB {
 
     //需输入用户名，密码新建用户
-    public static void addNewUser(final String userName, final String pwd, final userBackListener ubl) {
+    public static void addNewUser(final String userName, final String pwd, final UserBackListener ubl) {
         JMessageClient.register(userName, pwd, new BasicCallback() {
             @Override
             public void gotResult(int i, String s) {
@@ -56,7 +56,7 @@ public class userDB {
     }
 
     //判断是否成功登陆
-    public static void forUserLogin(String userName, final String password, final userBackListener ubl) {
+    public static void forUserLogin(String userName, final String password, final UserBackListener ubl) {
         JMessageClient.login(userName, password, new BasicCallback() {
             @Override
             public void gotResult(int i, String s) {
@@ -107,7 +107,7 @@ public class userDB {
     }
 
     //修改用户密码
-    public static void changeUserPwd(final String userName, final String password, final userBackListener ubl) {
+    public static void changeUserPwd(final String userName, final String password, final UserBackListener ubl) {
         BmobQuery<User> query = new BmobQuery<User>();
         query.addWhereEqualTo("userName", userName);
         query.findObjects(new FindListener<User>() {
@@ -152,7 +152,7 @@ public class userDB {
     }
 
     //添加用户密保信息
-    public static void addSecurityQA(String Q1, String A1, String Q2, String A2, final userBackListener ubl) {
+    public static void addSecurityQA(String Q1, String A1, String Q2, String A2, final UserBackListener ubl) {
         SecurityData s = new SecurityData();
         s.setUserName(JMessageClient.getMyInfo().getUserName());
         s.setA1(A1);
@@ -172,7 +172,7 @@ public class userDB {
     }
 
     //获得用户密保信息
-    public static void getSecurityQA(String userName, final userBackListListener ubl) {
+    public static void getSecurityQA(String userName, final UserBackListListener ubl) {
         BmobQuery<SecurityData> query = new BmobQuery<SecurityData>();
         query.addWhereEqualTo("userName", userName);
         query.findObjects(new FindListener<SecurityData>() {
@@ -197,7 +197,7 @@ public class userDB {
     }
 
     //添加用户相关信息
-    public static void addUserMessage(File image, String nickName, cn.jpush.im.android.api.model.UserInfo.Gender sex, Long birthday, String address, String explain, final userBackListener ubl) {
+    public static void addUserMessage(File image, String nickName, cn.jpush.im.android.api.model.UserInfo.Gender sex, Long birthday, String address, String explain, final UserBackListener ubl) {
         final int[] a = {0, 0};
         if (image != null && image.exists()) {
             a[0]++;
@@ -321,7 +321,7 @@ public class userDB {
     }
 
     //添加用户相关信息
-    public static void addUserIdentity(String identity, final userBackListener ubl) {
+    public static void addUserIdentity(String identity, final UserBackListener ubl) {
         UserInfo userInfo = new UserInfo();
         userInfo.setRegion(identity);
         JMessageClient.updateMyInfo(UserInfo.Field.region, userInfo, new BasicCallback() {

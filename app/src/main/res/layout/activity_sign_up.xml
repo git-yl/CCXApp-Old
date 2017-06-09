@@ -8,7 +8,7 @@
 
 
     <ImageView
-        android:id="@+id/logo"
+        android:id="@+id/logo_iv"
         android:layout_width="fill_parent"
         android:layout_height="150dp"
         android:layout_weight="1"
@@ -19,21 +19,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/accountLayout"
-        android:layout_below="@+id/logo"
+        android:id="@+id/accountLayout_lt"
+        android:layout_below="@+id/logo_iv"
         android:layout_alignParentStart="true">
 
         <ImageView
-            android:id="@+id/act"
+            android:id="@+id/act_iv"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginTop="5dp"
             android:src="@drawable/logup_1"
             android:layout_weight="1" />
 
-
         <EditText
-            android:id="@+id/sing_up_userName"
+            android:id="@+id/sing_up_userName_et"
             android:digits="0123456789"
             android:hint="请输入手机号码"
             android:layout_width="0dp"
@@ -46,20 +45,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/psdLayout"
-        android:layout_below="@+id/accountLayout">
+        android:id="@+id/psdLayout_lt"
+        android:layout_below="@+id/accountLayout_lt">
 
         <ImageView
-            android:id="@+id/psd"
+            android:id="@+id/psd_iv"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginTop="5dp"
             android:src="@drawable/logup_2"
             android:layout_weight="1" />
 
-
         <EditText
-            android:id="@+id/sing_up_password"
+            android:id="@+id/sing_up_password_et"
             android:digits="0123456789abcdefghijklmnopqrstuvwxyz"
             android:hint="请设置密码"
             android:inputType="textPassword"
@@ -73,20 +71,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/repsdLayout"
-        android:layout_below="@+id/psdLayout">
+        android:id="@+id/repsdLayout_lt"
+        android:layout_below="@+id/psdLayout_lt">
 
         <ImageView
-            android:id="@+id/repsd"
+            android:id="@+id/repsd_iv"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:src="@drawable/logup_2"
             android:layout_marginTop="5dp"
             android:layout_weight="1" />
 
-
         <EditText
-            android:id="@+id/sing_up_password2"
+            android:id="@+id/sing_up_password2_et"
             android:digits="0123456789abcdefghijklmnopqrstuvwxyz"
             android:hint="请确认密码"
             android:inputType="textPassword"
@@ -97,7 +94,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/sign_up"
+        android:id="@+id/sign_up_btn"
         android:onClick="sign up"
         android:text="注册"
         android:textColor="@color/white"
@@ -106,22 +103,22 @@
         android:background="@drawable/button_color"
         android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/repsdLayout"
+        android:layout_below="@+id/repsdLayout_lt"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp" />
 
     <TextView
-        android:id="@+id/below"
+        android:id="@+id/below_tv"
         android:text="                    已有账号？"
         android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/sign_up"
+        android:layout_below="@+id/sign_up_btn"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="9dp" />
 
     <TextView
-        android:id="@+id/to_login"
+        android:id="@+id/to_login_tv"
         android:onClick="login in"
         android:text="登录"
         android:textStyle="bold"
@@ -131,8 +128,8 @@
         android:clickable="true"
         android:textSize="18sp"
         android:layout_marginStart="13dp"
-        android:layout_alignBottom="@+id/below"
-        android:layout_toEndOf="@+id/below" />
+        android:layout_alignBottom="@+id/below_tv"
+        android:layout_toEndOf="@+id/below_tv" />
 </RelativeLayout>
 
 

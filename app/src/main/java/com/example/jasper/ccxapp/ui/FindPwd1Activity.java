@@ -24,9 +24,9 @@ public class FindPwd1Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_pwd1);
 
-        findPwdPhone = (EditText)findViewById(R.id.find_pwd_phone);
-        findPwdOK = (Button)findViewById(R.id.find_pwd_phone_OK);
-        findPwdCancel = (Button)findViewById(R.id.find_pwd_phone_cancel);
+        findPwdPhone = (EditText)findViewById(R.id.find_pwd_phone_et);
+        findPwdOK = (Button)findViewById(R.id.find_pwd_phone_OK_btn);
+        findPwdCancel = (Button)findViewById(R.id.find_pwd_phone_cancel_btn);
 
         findPwdOK.setOnClickListener(new View.OnClickListener() {
             @Override

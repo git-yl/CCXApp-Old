@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.hardware.Camera;
 import android.media.MediaPlayer;
 import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
@@ -101,13 +100,9 @@ public class MainActivity extends AppCompatActivity implements
     private String imgRecieveFlag = "";
     private String checkShowKey = "";
     private String checkCommKey = "";
-    private TextView toFriend;
     private TextView myName;
     private TextView userName;
     private TextView loginout;
-    private Button flashlight;
-    private Camera camera;
-    private boolean ifOpen;
     private CircleImageView leftUserAvatarCIV;
     private DrawerLayout drawerLayout;
     private ImageView myAvatarCIV;
@@ -160,8 +155,8 @@ public class MainActivity extends AppCompatActivity implements
 
         expandableListView = (PinnedHeaderExpandableListView) findViewById(R.id.expandablelist);
         stickyLayout = (StickyLayout) findViewById(R.id.sticky_layout);
-        myAvatarCIV = (ImageView) findViewById(R.id.my_avatar_civ);
-        userName = (TextView) findViewById(R.id.currentUserName);
+        myAvatarCIV = (ImageView) findViewById(R.id.my_avatar_iv);
+        userName = (TextView) findViewById(R.id.currentUserName_tv);
         TextPaint tp = userName.getPaint();
         tp.setFakeBoldText(true);
         JMessageClient.getMyInfo().getAvatarBitmap(new GetAvatarBitmapCallback() {
@@ -188,9 +183,8 @@ public class MainActivity extends AppCompatActivity implements
         drawerLayout.setScrimColor(Color.TRANSPARENT);
 
         View v1 = findViewById(R.id.left_drawer);
-        myName = (TextView) v1.findViewById(R.id.myName);
-        loginout = (TextView) v1.findViewById(R.id.loginout);
-        flashlight= (Button) findViewById(R.id.flashlight);
+        myName = (TextView) v1.findViewById(R.id.myName_tv);
+        loginout = (TextView) v1.findViewById(R.id.loginout_tv);
         leftUserAvatarCIV = (CircleImageView) v1.findViewById(R.id.left_my_avatar_civ);
         try {
             myName.setText(JMessageClient.getMyInfo().getNickname());
@@ -215,34 +209,8 @@ public class MainActivity extends AppCompatActivity implements
                         }).show();
             }
         });
-        ifOpen = false;
-        flashlight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(ifOpen){
-                    closeFlashlight();
-                }else{
-                    openFlashlight();
-                }
-            }
-        });
-    }
-    private void closeFlashlight() {
-        camera.stopPreview();
-        camera.release();
-        ifOpen = false;
-        flashlight.setBackground(this.getResources().getDrawable(R.drawable.flashlight_off));
     }
 
-    private void openFlashlight() {
-        camera = Camera.open();
-        Camera.Parameters params = camera.getParameters();
-        params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-        camera.setParameters(params);
-        camera.startPreview();
-        ifOpen = true;
-        flashlight.setBackground(this.getResources().getDrawable(R.drawable.flashlight_on));
-    }
     private void initMediaPlayer(String voicePath) {
         try {
             mediaPlayer.setDataSource(voicePath);
@@ -416,7 +384,7 @@ public class MainActivity extends AppCompatActivity implements
                 showHolder.showUserAvatarCIv = (CircleImageView) convertView.findViewById(R.id.show_user_avatar_civ);
                 showHolder.showTextTv = (TextView) convertView.findViewById(R.id.show_text_content_tv);
                 showHolder.showTimeTv = (TextView) convertView.findViewById(R.id.show_time_tv);
-                showHolder.expandedIv = (ImageView) convertView.findViewById(R.id.expanded_img);
+                showHolder.expandedIv = (ImageView) convertView.findViewById(R.id.expanded_iv);
                 showHolder.showImageRv = (RecyclerView) convertView.findViewById(R.id.show_recycler_view);
                 convertView.setTag(showHolder);
             } else {
@@ -424,7 +392,7 @@ public class MainActivity extends AppCompatActivity implements
             }
 
             showVideoView = (CustomVideoView) convertView.findViewById(R.id.show_video_view);
-            showVideoPlayBtn = (ImageView) convertView.findViewById(R.id.show_video_play_video_btn);
+            showVideoPlayBtn = (ImageView) convertView.findViewById(R.id.show_video_play_video_iv);
 
             final ShowItemModel showItem = (ShowItemModel) getGroup(groupPosition);
             showHolder.showUsernameTv.setText(showItem.getShowUsername());
@@ -514,7 +482,7 @@ public class MainActivity extends AppCompatActivity implements
                 convertView = inflater.inflate(R.layout.comment_item, null);
                 commentHolder.commentUsernameTv = (TextView) convertView.findViewById(R.id.comment_username_tv);
                 commentHolder.playVoiceCommentBtn = (Button) convertView.findViewById(R.id.play_comment_audio_btn);
-                commentHolder.timeofvoice = (TextView) convertView.findViewById(R.id.time_of_voice);
+                commentHolder.timeofvoice = (TextView) convertView.findViewById(R.id.time_of_voice_tv);
                 commentHolder.sendVoiceCommentBtn = (RecordButton) convertView.findViewById(R.id.send_comment_audio_btn);
                 commentHolder.commentTimeTv = (TextView) convertView.findViewById(R.id.comment_time_tv);
                 convertView.setTag(commentHolder);

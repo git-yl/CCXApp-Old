@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.example.jasper.ccxapp.R;
 import com.example.jasper.ccxapp.db.userDB;
-import com.example.jasper.ccxapp.interfaces.userBackListener;
+import com.example.jasper.ccxapp.interfaces.UserBackListener;
 
 import cn.jpush.im.android.api.JMessageClient;
 
@@ -42,11 +42,11 @@ public class LoginActivity extends AppCompatActivity {
 
         ifLogin();
 
-        usernameET = (EditText) findViewById(R.id.login_username);
-        passwordET = (EditText) findViewById(R.id.login_password);
-        signInBtn = (Button) findViewById(R.id.btn_sign_in);
-        signUpBtn = (TextView) findViewById(R.id.btn_sign_up);
-        findPwd = (TextView)findViewById(R.id.findPassword);
+        usernameET = (EditText) findViewById(R.id.login_username_et);
+        passwordET = (EditText) findViewById(R.id.login_password_et);
+        signInBtn = (Button) findViewById(R.id.sign_in_btn);
+        signUpBtn = (TextView) findViewById(R.id.sign_up_tv);
+        findPwd = (TextView)findViewById(R.id.findPassword_tv);
 
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,8 +101,10 @@ public class LoginActivity extends AppCompatActivity {
         } else if (!checkpassword(password)) {
             return;
         }
-        showProgressDialog(this, "系统提示", "信息加载中，请稍后");
-        userDB.forUserLogin(username, password, new userBackListener() {
+        if(!showProgressDialog(this, "系统提示", "信息加载中，请稍后")){
+            return;
+        }
+        userDB.forUserLogin(username, password, new UserBackListener() {
             @Override
             public void showResult(boolean result, String message) {
                 hideProgressDialog();

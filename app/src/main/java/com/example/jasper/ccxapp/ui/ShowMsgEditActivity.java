@@ -25,12 +25,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.jasper.ccxapp.R;
 import com.example.jasper.ccxapp.adapter.PhotoAdapter;
@@ -126,7 +124,7 @@ public class ShowMsgEditActivity extends AppCompatActivity implements MessageTyp
         mFlowLayout = (TagFlowLayout) findViewById(R.id.id_flowlayout);
         recordVideoIb = (ImageButton) findViewById(R.id.record_video_ib);
         videoView = (CustomVideoView) findViewById(R.id.video_view);
-        playVideoBtn = (ImageView) findViewById(R.id.play_video_btn);
+        playVideoBtn = (ImageView) findViewById(R.id.play_video_iv);
         lableVideoTv = (TextView) findViewById(R.id.labal_video_tv);
     }
 
