@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/appback2"
+    android:background="@drawable/app_bg"
     tools:context="com.example.jasper.ccxapp.ui.FindPwd2Activity">
 
     <TextView

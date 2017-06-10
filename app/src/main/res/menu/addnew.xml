@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/action_scan"
         android:title="more"
-        android:icon="@drawable/plus"
+        android:icon="@drawable/ic_plus"
         android:orderInCategory="100"
         app:showAsAction="always" />  
 

@@ -26,7 +26,7 @@
         android:textColor="#999999"
         android:layout_toRightOf="@+id/comment_username_tv"
         android:layout_marginLeft="10dp"
-        android:background="@drawable/comment_bg" />
+        android:background="@drawable/show_button" />
 
 
     <TextView

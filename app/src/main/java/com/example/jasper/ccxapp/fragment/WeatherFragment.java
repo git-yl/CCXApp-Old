@@ -18,6 +18,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,6 +72,7 @@ public class WeatherFragment extends Fragment implements SpeechSynthesizerListen
 
     private TextView weather_city, weather_temperture;
     private ImageView weather_image;
+    private ImageView audio_image;
     private static String cityName = "";
     private String result = "";
     private static Context context = null;
@@ -83,6 +85,7 @@ public class WeatherFragment extends Fragment implements SpeechSynthesizerListen
 
     private SpeechSynthesizer mSpeechSynthesizer;//百度语音合成客户端
     private String mSampleDirPath;
+
 
     @SuppressWarnings("deprecation")
     private static Runnable runnable = new Runnable() {
@@ -130,7 +133,7 @@ public class WeatherFragment extends Fragment implements SpeechSynthesizerListen
                     JSONObject city = results.getJSONObject(0);
                     String currentCity = city.getString("currentCity");  //获取city名字
                     String pm25 = city.getString("pm25");   //获取pm25
-                    weather_city.setText("城市："+currentCity+"\n"+"pm25："+pm25);  //测试城市和pm25
+                    weather_city.setText("城市："+currentCity+"\n"+"pm2.5："+pm25);  //测试城市和pm25
                     JSONArray index = city.getJSONArray("index"); //获取index里面的JSONArray
 
                     //weather_data, 未来几天
@@ -143,9 +146,9 @@ public class WeatherFragment extends Fragment implements SpeechSynthesizerListen
                     String weather0 = today.getString("weather");
                     String wind0 = today.getString("wind");
                     String temperature0 = today.getString("temperature");
-                    weather_temperture.setText("\n"+"今天："+date0+"\n"+"实时："+weather0+"\n"+"风力："+
+                    weather_temperture.setText(date0+"\n"+"天气："+weather0+"\n"+"风力："+
                             wind0+"\n"+"温度范围："+temperature0+"\n");
-                    needToRead = "\n"+"今天："+date0+"\n"+"实时："+weather0+"\n"+"风力："+
+                    needToRead = "\n"+"今天："+date0+weather0+"\n"+"风力："+
                             wind0+"\n"+"温度范围："+temperature0+"\n";
 
                     new Thread(new Runnable() {
@@ -215,10 +218,48 @@ public class WeatherFragment extends Fragment implements SpeechSynthesizerListen
         weather_city = (TextView)view.findViewById(R.id.weather_city_tv);
         weather_image = (ImageView) view.findViewById(R.id.weather_image_iv);
         weather_temperture = (TextView) view.findViewById(R.id.weather_temperture_tv);
-
+        audio_image=(ImageView) view.findViewById(R.id.start_audio);
         weather_city.setText(cityName);
-
+        audio_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mSpeechSynthesizer == null) {
+                    startTTS();
+                }
+                if(mSpeechSynthesizer != null){
+                    mSpeechSynthesizer.speak(needToRead);
+                }else{
+                    Toast.makeText(getContext(),"由于权限缺失，所以不能正常播放天气", Toast.LENGTH_SHORT);
+                }
+            }
+        });
         weather_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mSpeechSynthesizer == null) {
+                    startTTS();
+                }
+                if(mSpeechSynthesizer != null){
+                    mSpeechSynthesizer.speak(needToRead);
+                }else{
+                    Toast.makeText(getContext(),"由于权限缺失，所以不能正常播放天气", Toast.LENGTH_SHORT);
+                }
+            }
+        });
+        weather_temperture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mSpeechSynthesizer == null) {
+                    startTTS();
+                }
+                if(mSpeechSynthesizer != null){
+                    mSpeechSynthesizer.speak(needToRead);
+                }else{
+                    Toast.makeText(getContext(),"由于权限缺失，所以不能正常播放天气", Toast.LENGTH_SHORT);
+                }
+            }
+        });
+        weather_city.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mSpeechSynthesizer == null) {

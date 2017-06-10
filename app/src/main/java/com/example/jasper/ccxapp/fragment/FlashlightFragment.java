@@ -42,14 +42,14 @@ public class FlashlightFragment extends Fragment {
     }
 
     private void closeFlashlight() {
-        flashlight.setBackground(getActivity().getResources().getDrawable(R.drawable.flashlight_off));
+        flashlight.setBackground(getActivity().getResources().getDrawable(R.drawable.ic_flashlight_off));
         camera.stopPreview();
         camera.release();
         ifOpen = false;
     }
 
     private void openFlashlight() {
-        flashlight.setBackground(getActivity().getResources().getDrawable(R.drawable.flashlight_on));
+        flashlight.setBackground(getActivity().getResources().getDrawable(R.drawable.ic_flashlight_on));
         camera = Camera.open();
         Camera.Parameters params = camera.getParameters();
         params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);

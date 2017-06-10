@@ -386,6 +386,9 @@ public class UserMessageReviseActivity extends AppCompatActivity {
                     }
                 }
             });
+        }else {
+            Toast.makeText(UserMessageReviseActivity.this, "并未修改信息", Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
 

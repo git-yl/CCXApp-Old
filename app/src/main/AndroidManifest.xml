@@ -57,14 +57,14 @@
     <application
         android:name=".ui.application.BaseApplication"
         android:allowBackup="true"
-        android:icon="@drawable/logo"
+        android:icon="@drawable/logofinal"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme1">
-        <activity android:name=".ui.LoginActivity">
-
-        </activity>
+        <activity android:name=".ui.LoginActivity"
+            android:label="寸草心"
+            android:theme="@style/AppTheme1"/>
         <activity
             android:name=".ui.MainActivity"
             android:label="寸草心"
@@ -73,12 +73,13 @@
             android:name=".ui.ShowMsgEditActivity"
             android:label="编辑消息"
             android:theme="@style/AppTheme1" />
-        <activity android:name=".ui.AddUserMessageActivity" />
+        <activity android:name=".ui.AddUserMessageActivity"
+            android:label="补充用户信息"
+            android:theme="@style/AppTheme1"/>
         <activity
             android:name=".ui.SignUpActivity"
             android:label="注册"
             android:theme="@style/AppTheme1" />
-
         <!-- 图片选择组件 -->
         <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
@@ -161,11 +162,15 @@
             android:name=".ui.UserMessageReviseActivity"
             android:label="用户信息"
             android:theme="@style/AppTheme1" />
-        <activity android:name=".fragment.FlashlightFragment" />
-        <activity android:name=".ui.FindPwd1Activity" />
-        <activity android:name=".ui.FindPwd2Activity" />
-        <activity android:name=".ui.FindPwd3Activity" />
-        <activity android:name=".ui.application.WelcomeActivity" />
+        <activity android:name=".ui.FindPwd1Activity"
+            android:label="输入手机号"
+            android:theme="@style/AppTheme1"/>
+        <activity android:name=".ui.FindPwd2Activity"
+            android:label="回答密保问题"
+            android:theme="@style/AppTheme1"/>
+        <activity android:name=".ui.FindPwd3Activity"
+            android:label="设置新密码"
+            android:theme="@style/AppTheme1"/>
         <activity android:name=".ui.GuideActivity" />
         <activity android:name=".ui.SplashActivity">
             <intent-filter>
