@@ -1,4 +1,4 @@
-package com.example.jasper.ccxapp.ui.application;
+package com.example.jasper.ccxapp.application;
 
 import android.app.Application;
 import android.content.Context;
@@ -23,7 +23,7 @@ public class BaseApplication extends Application {
         Bmob.initialize(this, "31f4f13611f6d6904ee94ab4ff3095aa");//初始化Bmob
 
         // You can enable debug mode in developing state. You should close debug mode when release.
-        JMessageClient.setDebugMode(true);
+        JMessageClient.setDebugMode(false);
         JMessageClient.init(this,true);
 
         //创建资源文件目录
