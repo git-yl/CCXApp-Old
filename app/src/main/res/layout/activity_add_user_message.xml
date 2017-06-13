@@ -18,7 +18,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@drawable/img_default" />
 
     <TextView
         android:id="@+id/add_message_image_tv"

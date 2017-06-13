@@ -21,6 +21,7 @@ import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.jpush.im.android.api.ContactManager;
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.GetUserInfoCallback;
 import cn.jpush.im.api.BasicCallback;
 
 /**
@@ -51,6 +52,16 @@ public class userDB {
                 } else {
                     ubl.showResult(false, s);
                 }
+            }
+        });
+    }
+
+    //获得用户信息
+    public static void getFriendMessage(String name){
+        JMessageClient.getUserInfo(name, new GetUserInfoCallback() {
+            @Override
+            public void gotResult(int i, String s, cn.jpush.im.android.api.model.UserInfo userInfo) {
+
             }
         });
     }

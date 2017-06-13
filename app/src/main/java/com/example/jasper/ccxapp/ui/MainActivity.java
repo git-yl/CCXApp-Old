@@ -718,6 +718,7 @@ public class MainActivity extends AppCompatActivity implements
         switch (event.getType()) {
             case invite_received://收到好友邀请
                 userDB.agreenewfriend(fromUsername);
+                userDB.getFriendMessage(fromUsername);
                 break;
             default:
                 break;
