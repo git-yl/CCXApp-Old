@@ -29,7 +29,7 @@ import android.widget.Toast;
 
 import com.example.jasper.ccxapp.R;
 import com.example.jasper.ccxapp.db.userDB;
-import com.example.jasper.ccxapp.interfaces.userBackListener;
+import com.example.jasper.ccxapp.interfaces.UserBackListener;
 import com.example.jasper.ccxapp.util.ImageUtil;
 
 import java.io.File;
@@ -38,6 +38,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.model.UserInfo;
@@ -76,8 +77,6 @@ public class AddUserMessageActivity extends AppCompatActivity {
     private int mDay = -1;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,19 +84,19 @@ public class AddUserMessageActivity extends AppCompatActivity {
 
         Toast.makeText(this, "注册完成，请填写详细信息", Toast.LENGTH_SHORT).show();
 
-        message_image = (ImageView)findViewById(R.id.add_message_image);
-        btn_image = (TextView)findViewById(R.id.add_message_image_btn);
-        userName = (TextView)findViewById(R.id.message_userName);
-        nickName = (EditText)findViewById(R.id.message_nickname);
-        message_sex = (RadioGroup)findViewById(R.id.message_sex);
-        message_birthday = (EditText)findViewById(R.id.showBirthday);
-        message_address = (EditText)findViewById(R.id.message_address);
-        message_explain = (EditText)findViewById(R.id.message_explain);
+        message_image = (ImageView)findViewById(R.id.add_message_image_civ);
+        btn_image = (TextView)findViewById(R.id.add_message_image_tv);
+        userName = (TextView)findViewById(R.id.message_userName_tv);
+        nickName = (EditText)findViewById(R.id.message_nickname_tv);
+        message_sex = (RadioGroup)findViewById(R.id.message_sex_rg);
+        message_birthday = (EditText)findViewById(R.id.showBirthday_et);
+        message_address = (EditText)findViewById(R.id.message_address_et);
+        message_explain = (EditText)findViewById(R.id.message_explain_et);
         add_message = (Button)findViewById(R.id.add_message_btn);
-        securityQ1 = (Spinner)findViewById(R.id.securityQ1);
-        securityQ2 = (EditText)findViewById(R.id.securityQ2);
-        answerQ1 = (EditText)findViewById(R.id.securityA1);
-        answerQ2 = (EditText)findViewById(R.id.securityA2);
+        securityQ1 = (Spinner)findViewById(R.id.securityQ1_sp);
+        securityQ2 = (EditText)findViewById(R.id.securityQ2_et);
+        answerQ1 = (EditText)findViewById(R.id.securityA1_et);
+        answerQ2 = (EditText)findViewById(R.id.securityA2_et);
         imageUtils = new ImageUtil(AddUserMessageActivity.this);
 
         userName.setText(getIntent().getStringExtra("userName"));
@@ -154,21 +153,24 @@ public class AddUserMessageActivity extends AppCompatActivity {
 
         //适配器
         SpinnerAdapter arr_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data_list);
-//        //设置样式
-//        arr_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //加载适配器
         securityQ1.setAdapter(arr_adapter);
 
         addOriMessage();
     }
 
-    public boolean checkPermision(String[] permissions) {
+    public boolean checkPermision(String[] permissions2) {
         boolean flag = false;
-        for(String permission : permissions){
+        List<String> permissions3 = new ArrayList<String>();
+        for(String permission : permissions2){
             if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED){
                 flag = true;
-                break;
+                permissions3.add(permission);
             }
+        }
+        String[] permissions = new String[permissions3.size()];
+        for(int i = 0; i < permissions3.size(); i++){
+            permissions[i] = permissions3.get(i);
         }
         if(flag){
             ActivityCompat.requestPermissions(this, permissions, 1);
@@ -297,20 +299,20 @@ public class AddUserMessageActivity extends AppCompatActivity {
         oriAddress = "北京";
         oriExplain = "";
         String password = getIntent().getStringExtra("password");
-        userDB.forUserLogin(oriNickName, password, new userBackListener() {
+        userDB.forUserLogin(oriNickName, password, new UserBackListener() {
             @Override
             public void showResult(boolean result, String message) {
                 if(!result){
                     showDialog2("联网错误！");
                 }else{
                     userDB.addUserMessage(null, oriNickName, oriSex, oriBirthday, oriAddress,
-                            oriExplain, new userBackListener() {
+                            oriExplain, new UserBackListener() {
                                 @Override
                                 public void showResult(boolean result, String message) {
                                     if(!result){
                                         showDialog2("联网错误！");
                                     }else{
-                                        userDB.addUserIdentity("old", new userBackListener() {
+                                        userDB.addUserIdentity("old", new UserBackListener() {
                                             @Override
                                             public void showResult(boolean result, String message) {
                                                 if(!result){
@@ -333,7 +335,7 @@ public class AddUserMessageActivity extends AppCompatActivity {
         String nickname = nickName.getText().toString().trim();
         int sexid = message_sex.getCheckedRadioButtonId();
         UserInfo.Gender sex;
-        if(sexid == R.id.female){
+        if(sexid == R.id.female_rb){
             sex = UserInfo.Gender.female;
         }else{
             sex = UserInfo.Gender.male;
@@ -382,10 +384,12 @@ public class AddUserMessageActivity extends AppCompatActivity {
         String Q2 = securityQ2.getText().toString();
         String A2 = answerQ2.getText().toString();
 
-        showProgressDialog(this, "系统提示", "信息加载中，请稍后");
+        if(!showProgressDialog(this, "系统提示", "信息加载中，请稍后")){
+            return;
+        }
         if(!(A1.equals("") && A2.equals(""))){
             flag[1] = true;
-            userDB.addSecurityQA(Q1, A1, Q2, A2, new userBackListener() {
+            userDB.addSecurityQA(Q1, A1, Q2, A2, new UserBackListener() {
                 @Override
                 public void showResult(boolean result, String message) {
                     flag[3] = true;
@@ -419,7 +423,7 @@ public class AddUserMessageActivity extends AppCompatActivity {
             });
         }
         if(flag[0]) {
-            userDB.addUserMessage(imagePath, nickname, sex, birthday, address, explain, new userBackListener() {
+            userDB.addUserMessage(imagePath, nickname, sex, birthday, address, explain, new UserBackListener() {
                 @Override
                 public void showResult(boolean result, String message) {
                     flag[2] = true;

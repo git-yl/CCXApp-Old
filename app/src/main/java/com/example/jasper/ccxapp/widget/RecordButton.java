@@ -159,7 +159,7 @@ public class RecordButton extends android.support.v7.widget.AppCompatButton impl
         mStartTime = System.currentTimeMillis();
         mDialog = new Dialog(getContext(), R.style.recordbutton_alert_dialog);
         View contentView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_recordbutton_alert_dialog, null);
-        mImageView = (ImageView) contentView.findViewById(R.id.zeffect_recordbutton_dialog_imageview);
+        mImageView = (ImageView) contentView.findViewById(R.id.zeffect_recordbutton_dialog_iv);
         mTimeTv = (TextView) contentView.findViewById(R.id.zeffect_recordbutton_dialog_time_tv);
         mTitleTv = (TextView) contentView.findViewById(R.id.zeffect_recordbutton_dialog_title_tv);
         mDialog.setContentView(contentView, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));

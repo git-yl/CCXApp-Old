@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.example.jasper.ccxapp.R;
 import com.example.jasper.ccxapp.db.userDB;
-import com.example.jasper.ccxapp.interfaces.userBackListListener;
+import com.example.jasper.ccxapp.interfaces.UserBackListListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,12 +35,12 @@ public class FindPwd2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_pwd2);
 
-        findPwdOK = (Button)findViewById(R.id.find_pwd_phone_OK);
-        findPwdCancel = (Button)findViewById(R.id.find_pwd_phone_cancel);
-        Q1 = (TextView)findViewById(R.id.Q1);
-        Q2 = (TextView)findViewById(R.id.Q2);
-        A1 = (EditText) findViewById(R.id.A1);
-        A2 = (EditText) findViewById(R.id.A2);
+        findPwdOK = (Button)findViewById(R.id.find_pwd_phone_OK_btn);
+        findPwdCancel = (Button)findViewById(R.id.find_pwd_phone_cancel_btn);
+        Q1 = (TextView)findViewById(R.id.Q1_tv);
+        Q2 = (TextView)findViewById(R.id.Q2_tv);
+        A1 = (EditText) findViewById(R.id.A1_et);
+        A2 = (EditText) findViewById(R.id.A2_et);
 
         findPwdOK.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +60,7 @@ public class FindPwd2Activity extends AppCompatActivity {
 
     private void getOriData() {
         String phone = getIntent().getStringExtra("phone");
-        userDB.getSecurityQA(phone, new userBackListListener() {
+        userDB.getSecurityQA(phone, new UserBackListListener() {
             @Override
             public void showResult(boolean result, ArrayList<String> message, List<UserInfo> userInfos) {
                 if(result){

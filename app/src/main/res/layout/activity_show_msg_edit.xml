@@ -41,7 +41,7 @@
             android:layout_marginTop="10dp"
             android:src="#E4E3E3" />
 <TextView
-    android:id="@+id/text_photo"
+    android:id="@+id/text_photo_tv"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="选择/拍摄图片"/>
@@ -63,7 +63,7 @@
                 android:visibility="gone"/>
 
             <ImageView
-                android:id="@+id/play_video_btn"
+                android:id="@+id/play_video_iv"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerInParent="true"
@@ -88,7 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/mirco_state" />
+            android:src="@drawable/ic_mirco_state" />
 
         <ImageView
             android:layout_width="match_parent"
@@ -107,19 +107,6 @@
             android:layout_height="1dp"
             android:src="#E4E3E3" />
 
-        <!--Button
-            android:id="@+id/msg_send_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="35dp"
-            android:layout_marginRight="35dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/send_btn_selector"
-            android:gravity="center"
-            android:text="发表"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" /-->
     </LinearLayout>
 
 </LinearLayout>

@@ -27,13 +27,15 @@ import android.widget.Toast;
 
 import com.example.jasper.ccxapp.R;
 import com.example.jasper.ccxapp.db.userDB;
-import com.example.jasper.ccxapp.interfaces.userBackListener;
+import com.example.jasper.ccxapp.interfaces.UserBackListener;
 import com.example.jasper.ccxapp.util.ImageUtil;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.callback.GetAvatarBitmapCallback;
@@ -49,6 +51,7 @@ public class UserMessageReviseActivity extends AppCompatActivity {
 
     private ImageView message_image;
     private TextView btn_image;
+    private Button loginout;
     private TextView userName;
     private EditText nickName;
     private RadioGroup message_sex;
@@ -75,21 +78,32 @@ public class UserMessageReviseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_message_revise);
 
-        message_image = (ImageView)findViewById(R.id.add_message_image);
-        btn_image = (TextView) findViewById(R.id.add_message_image_btn);
-        userName = (TextView) findViewById(R.id.message_userName);
-        nickName = (EditText)findViewById(R.id.message_nickname);
-        message_sex = (RadioGroup)findViewById(R.id.message_sex);
-        message_birthday = (EditText)findViewById(R.id.showBirthday);
-        message_address = (EditText)findViewById(R.id.message_address);
-        message_explain = (EditText)findViewById(R.id.message_explain);
+        loginout=(Button)findViewById(R.id.loginout_btn);
+        message_image = (ImageView)findViewById(R.id.add_message_image_civ);
+        btn_image = (TextView) findViewById(R.id.add_message_image_tv);
+        userName = (TextView) findViewById(R.id.message_userName_tv);
+        nickName = (EditText)findViewById(R.id.message_nickname_tv);
+        message_sex = (RadioGroup)findViewById(R.id.message_sex_rg);
+        message_birthday = (EditText)findViewById(R.id.showBirthday_et);
+        message_address = (EditText)findViewById(R.id.message_address_et);
+        message_explain = (EditText)findViewById(R.id.message_explain_et);
         add_message = (Button)findViewById(R.id.add_message_btn);
-        male = (RadioButton)findViewById(R.id.male);
-        female = (RadioButton)findViewById(R.id.female);
+        male = (RadioButton)findViewById(R.id.male_rb);
+        female = (RadioButton)findViewById(R.id.female_rb);
         imageUtils = new ImageUtil(UserMessageReviseActivity.this);
 
         initVariable();
-
+        message_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String[] permissions = {Manifest.permission.CAMERA,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                if(checkPermision(permissions)){
+                    chooseDialog();
+                }
+            }
+        });
         btn_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +115,18 @@ public class UserMessageReviseActivity extends AppCompatActivity {
                 }
             }
         });
-
+        loginout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(UserMessageReviseActivity.this).setTitle("系统提示").setMessage("是否确认退出登录？")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                loginOut();
+                            }
+                        }).show();
+            }
+        });
         add_message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,13 +189,24 @@ public class UserMessageReviseActivity extends AppCompatActivity {
         message_explain.setText(oriExplain);
     }
 
-    public boolean checkPermision(String[] permissions) {
+    private void loginOut() {
+        JMessageClient.logout();
+        startActivity(new Intent(UserMessageReviseActivity.this, LoginActivity.class));
+        this.finish();
+    }
+
+    public boolean checkPermision(String[] permissions2) {
         boolean flag = false;
-        for(String permission : permissions){
+        List<String> permissions3 = new ArrayList<String>();
+        for(String permission : permissions2){
             if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED){
                 flag = true;
-                break;
+                permissions3.add(permission);
             }
+        }
+        String[] permissions = new String[permissions3.size()];
+        for(int i = 0; i < permissions3.size(); i++){
+            permissions[i] = permissions3.get(i);
         }
         if(flag){
             ActivityCompat.requestPermissions(this, permissions, 1);
@@ -289,7 +325,7 @@ public class UserMessageReviseActivity extends AppCompatActivity {
         String nickname = nickName.getText().toString().trim();
         int sexid = message_sex.getCheckedRadioButtonId();
         UserInfo.Gender sex;
-        if(sexid == R.id.female){
+        if(sexid == R.id.female_rb){
             sex = UserInfo.Gender.female;
         }else{
             sex = UserInfo.Gender.male;
@@ -335,7 +371,7 @@ public class UserMessageReviseActivity extends AppCompatActivity {
         }
         if(flag) {
             showProgressDialog(this, "系统提示", "信息加载中，请稍后");
-            userDB.addUserMessage(imagePath, nickname, sex, birthday, address, explain, new userBackListener() {
+            userDB.addUserMessage(imagePath, nickname, sex, birthday, address, explain, new UserBackListener() {
                 @Override
                 public void showResult(boolean result, String message) {
                     hideProgressDialog();
@@ -350,6 +386,9 @@ public class UserMessageReviseActivity extends AppCompatActivity {
                     }
                 }
             });
+        }else {
+            Toast.makeText(UserMessageReviseActivity.this, "并未修改信息", Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
 

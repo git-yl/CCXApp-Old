@@ -19,18 +19,18 @@
     <Button
         android:id="@+id/play_comment_audio_btn"
         android:layout_width="50dp"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:text=")))"
         android:gravity="center"
-        android:textSize="15dp"
+        android:textSize="13dp"
         android:textColor="#999999"
         android:layout_toRightOf="@+id/comment_username_tv"
         android:layout_marginLeft="10dp"
-        android:background="@drawable/voice_bg" />
+        android:background="@drawable/show_button" />
 
 
     <TextView
-        android:id="@+id/time_of_voice"
+        android:id="@+id/time_of_voice_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/play_comment_audio_btn"

@@ -8,7 +8,7 @@
     android:padding="10dp">
 
     <ImageView
-        android:id="@+id/zeffect_recordbutton_dialog_imageview"
+        android:id="@+id/zeffect_recordbutton_dialog_iv"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:src="@drawable/zeffect_recordbutton_micrphone" />

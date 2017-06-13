@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/appback2"
+    android:background="@drawable/app_bg"
     tools:context="com.example.jasper.ccxapp.ui.FindPwd2Activity">
 
     <TextView
-        android:id="@+id/Q1"
+        android:id="@+id/Q1_tv"
         android:layout_marginLeft="5dp"
         android:textColor="#2c3474"
         android:layout_marginTop="21dp"
@@ -18,34 +18,34 @@
         android:layout_alignParentTop="true"
         />
     <EditText
-        android:id="@+id/A1"
+        android:id="@+id/A1_et"
         android:layout_marginLeft="5dp"
         android:layout_width="match_parent"
         android:background="#f5f2f2"
         android:layout_height="80dp"
-        android:layout_below="@+id/Q1"
+        android:layout_below="@+id/Q1_tv"
         />
     <TextView
-        android:id="@+id/Q2"
+        android:id="@+id/Q2_tv"
         android:layout_marginLeft="5dp"
         android:textColor="#2c3474"
         android:textSize="24dp"
         android:layout_width="wrap_content"
         android:layout_height="70dp"
-        android:layout_above="@+id/A2"
-        android:layout_alignStart="@+id/A2" />
+        android:layout_above="@+id/A2_et"
+        android:layout_alignStart="@+id/A2_et" />
     <EditText
-        android:id="@+id/A2"
+        android:id="@+id/A2_et"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_width="match_parent"
         android:background="#f5f2f2"
         android:layout_height="80dp"
         android:layout_marginBottom="40dp"
-        android:layout_above="@+id/find_pwd_phone_OK"
+        android:layout_above="@+id/find_pwd_phone_OK_btn"
         android:layout_centerHorizontal="true" />
     <Button
-        android:id="@+id/find_pwd_phone_OK"
+        android:id="@+id/find_pwd_phone_OK_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/button_color"
@@ -53,11 +53,11 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:text="确定"
-        android:layout_above="@+id/find_pwd_phone_cancel"
+        android:layout_above="@+id/find_pwd_phone_cancel_btn"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="14dp" />
     <Button
-        android:id="@+id/find_pwd_phone_cancel"
+        android:id="@+id/find_pwd_phone_cancel_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/button_color"

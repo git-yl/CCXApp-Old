@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@mipmap/pic_guidepage_4">
+
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="160dp"
+        android:layout_height="42dp"
+        android:layout_marginBottom="60dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:background="@drawable/button_shape"
+        android:text="点击进入"
+        android:textColor="#ce102c"
+        android:textSize="18sp"
+        android:visibility="visible" />
+
+</FrameLayout>

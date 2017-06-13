@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:background="#dd5a5a"
-    android:orientation="vertical">
+    android:background="@drawable/main_left_bg">
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
-        android:paddingTop="10dp">
+        android:paddingTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/name">
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/left_my_avatar_civ"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/profile"
+            android:src="@drawable/img_default"
             app:civ_border_color="@color/white"
             app:civ_border_width="2dp" />
 
         <TextView
-            android:id="@+id/myName"
+            android:id="@+id/myName_tv"
             android:layout_width="wrap_content"
             android:layout_height="28.0dip"
             android:layout_centerVertical="true"
@@ -32,69 +33,37 @@
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/loginout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="退出登录"
-            android:textColor="@color/white"
-            android:textSize="16.0sp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_centerVertical="true"
-            />
+
     </RelativeLayout>
     <View
+        android:id="@+id/line_1"
+        android:layout_marginBottom="30dp"
+        android:layout_above="@+id/fragment_flashlight"
         android:layout_width="match_parent"
         android:layout_height="2.0dip"
-        android:background="@drawable/biz_pc_account_line" />
-    <LinearLayout
+        android:background="@drawable/account_line"/>
+    <fragment
+        android:id="@+id/fragment_flashlight"
+        android:name="com.example.jasper.ccxapp.fragment.FlashlightFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <Button
-            android:id="@+id/flashlight"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/flashlight_off"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="手电筒"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            android:layout_gravity="center_horizontal"/>
-    </LinearLayout>
+        android:layout_above="@+id/line_view"
+        android:layout_marginBottom="40dp"/>
     <View
+        android:id="@+id/line_view"
+        android:layout_marginBottom="30dp"
+        android:layout_above="@+id/fragment_weather"
         android:layout_width="match_parent"
         android:layout_height="2.0dip"
-        android:background="@drawable/biz_pc_account_line" />
-    <LinearLayout
+        android:background="@drawable/account_line"/>
+    <fragment
+        android:layout_alignParentBottom="true"
+        android:id="@+id/fragment_weather"
+        android:name="com.example.jasper.ccxapp.fragment.WeatherFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginBottom="15dp"
+        />
 
-        <Button
-            android:id="@+id/imageView2"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/weather" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="天气预报"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            android:layout_gravity="center_horizontal"/>
-    </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2.0dip"
-        android:background="@drawable/biz_pc_account_line" />
-
-</LinearLayout>
+</RelativeLayout>

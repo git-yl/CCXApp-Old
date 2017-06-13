@@ -3,18 +3,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/appback2"
+    android:background="@drawable/app_bg"
     android:orientation="vertical">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/add_message_image"
+        android:id="@+id/add_message_image_civ"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:src="@mipmap/ic_launcher" />
 
     <TextView
-        android:id="@+id/add_message_image_btn"
+        android:id="@+id/add_message_image_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -31,11 +31,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="用户名"
+            android:paddingTop="16.5dp"
             android:textSize="17dp" />
 
         <TextView
-            android:id="@+id/message_userName"
+            android:id="@+id/message_userName_tv"
             android:layout_width="wrap_content"
+            android:paddingTop="16.5dp"
             android:layout_height="50dp"
             android:layout_marginLeft="40dp"
             android:background="@null" />
@@ -61,7 +63,7 @@
             android:textSize="17dp" />
 
         <EditText
-            android:id="@+id/message_nickname"
+            android:id="@+id/message_nickname_tv"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="57dp"
@@ -89,14 +91,14 @@
             android:textSize="17dp" />
 
         <RadioGroup
-            android:id="@+id/message_sex"
+            android:id="@+id/message_sex_rg"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginLeft="57dp"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/male"
+                android:id="@+id/male_rb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
@@ -104,7 +106,7 @@
                 android:text="男" />
 
             <RadioButton
-                android:id="@+id/female"
+                android:id="@+id/female_rb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -132,12 +134,12 @@
             android:textSize="17dp" />
 
         <EditText
-            android:id="@+id/showBirthday"
+            android:id="@+id/showBirthday_et"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginLeft="57dp"
             android:background="@android:color/transparent"
-            android:text="1991-01-01"
+            android:text="1990-01-01"
             android:textColor="#8B7D7b"
             android:textSize="16dp" />
     </LinearLayout>
@@ -161,7 +163,7 @@
             android:textSize="17dp" />
 
         <EditText
-            android:id="@+id/message_address"
+            android:id="@+id/message_address_et"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="57dp"
@@ -187,7 +189,7 @@
             android:textSize="17dp" />
 
         <EditText
-            android:id="@+id/message_explain"
+            android:id="@+id/message_explain_et"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="23dp"
@@ -208,6 +210,17 @@
         android:layout_marginTop="30dp"
         android:background="@drawable/button_color"
         android:text="提交信息"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+    <Button
+        android:id="@+id/loginout_btn"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_color"
+        android:text="退出登录"
         android:textColor="@color/white"
         android:textStyle="bold" />
 
